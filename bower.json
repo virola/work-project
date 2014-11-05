@@ -1,0 +1,20 @@
+{
+  "name": "projects",
+  "version": "0.1.0",
+  "authors": [
+    "Virola <virola.zhu@gmail.com>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "ignore": [
+    ".jshintrc"
+  ],
+  "private": true,
+  "devDependencies": {
+    "jquery": "~1.11.1",
+    "est": "https://github.com/ecomfe/est.git",
+    "html5shiv": "~3.7.2",
+    "rotate.js": "https://github.com/sorccu/rotate.js.git"
+  }
+}
