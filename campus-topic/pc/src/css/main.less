@@ -12,7 +12,6 @@ body {
     color: #000;
 }
 
-
 .banner {
     background: url(../img/banner.png) no-repeat;
     .size(980px, 454px);
@@ -34,7 +33,20 @@ body {
     .size(198px, 42px);
     background: url(../img/reg-btn.png) no-repeat;
 }
+.btn-bbs {
+    display: block;
+    .size(339px, 76px);
+    background: url(../img/btn-bbs.png) no-repeat;
+}
 
 .main {
     margin-top: 75px;
+    position: relative;
+
+    .btn-bbs {
+        margin: 50px auto;
+    }
 }
+
+@import 'group';
+@import 'layer';

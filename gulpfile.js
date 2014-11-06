@@ -25,7 +25,7 @@ var paths = {
     js:     ['src/js/*.js'],
     less:   ['src/css/*.less'],
     lessDest: ['src/css/main.less'],
-    img:    ['src/img/*.png']
+    img:    ['src/img/*.png', 'src/img/**/*.png']
 };
 
 projects.forEach(function (project, i) {
@@ -34,9 +34,9 @@ projects.forEach(function (project, i) {
         return false;
     }
 
-    gulp.task(project + 'clean', function (cb) {
-        del([dir + '/asset'], cb);
-    });
+    // gulp.task(project + 'clean', function (cb) {
+    //     del([dir + '/asset'], cb);
+    // });
 
     gulp.task(project + 'js', function() {
         return gulp.src(dir + '/' + paths.js)
@@ -47,7 +47,12 @@ projects.forEach(function (project, i) {
 
     gulp.task(project + 'uglify', [project + 'js'], function() {
         return gulp.src([dir + '/' + 'asset/js/*.js'])
-            .pipe(uglify())
+            .pipe(uglify({
+                mangle: {
+                    except: ['require', 'define', 'export']
+                },
+                compress: true
+            }))
             .pipe(gulp.dest(dir + '/' + 'asset/js'));
     });
 
@@ -59,6 +64,12 @@ projects.forEach(function (project, i) {
 
     gulp.task(project + 'less', function () {
         gulp.src(dir + '/' + paths.lessDest)
+            .pipe(less())
+            .pipe(gulp.dest(dir + '/' + 'asset/css'));
+    });
+
+    gulp.task(project + 'less-build', function () {
+        gulp.src(dir + '/' + paths.lessDest)
             .pipe(less({compress: true}))
             .pipe(gulp.dest(dir + '/' + 'asset/css'));
     });
@@ -66,14 +77,12 @@ projects.forEach(function (project, i) {
     gulp.task(project + 'watch', function() {
         gulp.watch(dir + '/' + paths.js, [project +'js']);
         gulp.watch(dir + '/' + paths.less, [project +'less']);
-        gulp.watch(dir + '/' + paths.img, [project +'img']);
     });
 
     gulp.task(project + 'build', [
-        project + 'clean', 
+        // project + 'clean', 
         project + 'uglify', 
-        project + 'less', 
-        project + 'img'
+        project + 'less-build'
     ]);
 });
 

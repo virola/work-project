@@ -1,0 +1,143 @@
+.mask {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, .7);
+    display: none;
+}
+.popup {
+    position: absolute;
+    z-index: 199;
+    width: 980px;
+    box-shadow: 0 0 3px #fff;
+    display: none;
+
+    &-close {
+        position: absolute;
+        right: 14px;
+        top: 14px;
+        color: #666;
+
+        i {
+            display: inline-block;
+            margin-left: 5px;
+            vertical-align: middle;
+            .size(19px);
+            background: url(../img/btn/btn-close.png) no-repeat;
+        }
+    }
+
+    &-layer {
+        padding: 40px;
+        background-color: #fff;
+    }
+
+    .btn {
+        position: absolute;
+        display: block;
+        .size(117px, 80px);
+        text-align: center;
+
+        em {
+            display: block;
+            margin-top: 48px;
+            color: #fff;
+            text-indent: -1em;
+            font-weight: 700;
+        }
+    }
+}
+
+.up-btn(@number) {
+    .popup-@{number} {
+        .btn {
+            background-image: url("../img/btn/btn-@{number}.png");
+        }
+    }
+}
+.colorful-text(@number) {
+    .popup-@{number} {
+        .act-album p {
+            background-image: url("../img/text-bg/bg-@{number}.png");
+        }
+    }
+}
+
+.up-btn(0);
+.up-btn(1);
+.up-btn(2);
+.up-btn(3);
+.up-btn(4);
+.up-btn(5);
+
+.colorful-text(0);
+.colorful-text(1);
+.colorful-text(2);
+.colorful-text(3);
+.colorful-text(4);
+.colorful-text(5);
+
+
+// content
+.header {
+    position: relative;
+    margin-bottom: 50px;
+    .clearfix();
+
+    dt {
+        float: left;
+
+        .logo {
+            display: block;
+            .size(155px);
+        }
+    }
+
+    dd {
+        margin: 0 200px 0 230px;
+
+        h2 {
+            font-size: 30px;
+            margin: 20px 0;
+        }
+
+        .desc {
+            line-height: 20px;
+            color: #969696;
+        }
+    }
+
+    .btn {
+        top: 30px;
+        right: 20px;
+    }
+}
+.act-album {
+
+    li {
+        float: left;
+        .size(288px, 370px);
+        margin: 0 12px 20px 0;
+
+        p {
+            margin-left: -12px;
+            padding: 16px 20px;
+            padding-right: 35px;
+            color: #fff;
+            .size(304px, 70px);
+            overflow: hidden;
+            box-sizing: border-box;
+            font-size: 12px;
+            line-height: 24px;
+            .ellipsis(2);
+        }
+    }
+
+    img {
+        .size(288px);
+    }
+}
+
