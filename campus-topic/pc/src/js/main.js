@@ -25,7 +25,13 @@ define(function (require) {
         });
     }
 
+    var isVoted;
+
     function vote(index, data) {
+        if (isVoted) {
+            alert('今天已投票，请明天再来！')
+            return false;
+        }
         var pageBtn = $('.group .btn').eq(index);
         var layerBtn = $('.popup .btn').eq(index);
 
@@ -33,6 +39,8 @@ define(function (require) {
         var number = parseInt(cnt.text(), 10) + 1;
         
         pageBtn.add(layerBtn).find('em').text(number);
+
+        isVoted = 1;
     }
 
     function bindPageEvents() {
