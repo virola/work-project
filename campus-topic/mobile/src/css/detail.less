@@ -1,0 +1,95 @@
+.detail-main {
+    padding: 0 10px;
+}
+
+.detail {
+    .header {
+        position: relative;
+        margin: 30px 0;
+        .clearfix();
+
+        dt {
+            float: left;
+            width: 25%;
+
+            .logo {
+                display: block;
+
+                img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+        }
+
+        dd {
+            margin-left: 30%;
+
+            h2 {
+                font-size: 150%;
+                margin-bottom: 2em;
+            }
+
+            .desc {
+                line-height: 20px;
+                color: #969696;
+            }
+        }
+
+        .btn {
+            position: absolute;
+            display: block;
+            top: -15px;
+            right: 0;
+            .size(100px, 70px);
+            text-align: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+
+            em {
+                display: block;
+                margin-top: 40px;
+                color: #fff;
+                text-indent: -1em;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .act-album {
+
+        li {
+            margin-bottom: 50px;
+
+            p {
+                line-height: 1.4;
+            }
+        }
+
+        .album-img {
+            margin-bottom: 15px;
+            
+            img {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+.up-btn(@number) {
+    .detail-@{number} {
+        .btn {
+            background-image: url("../img/btn/btn-@{number}.png");
+        }
+    }
+}
+
+.up-btn(0);
+.up-btn(1);
+.up-btn(2);
+.up-btn(3);
+.up-btn(4);
+.up-btn(5);
+

@@ -1,0 +1,133 @@
+@group-color-0: #d05861;
+@group-color-1: #f88848;
+@group-color-2: #54484a;
+@group-color-3: #37709d;
+@group-color-4: #323c60;
+@group-color-5: #88a445;
+
+
+.group {
+    padding: 0;
+    margin: 0 10px;
+    position: relative;
+
+    .bg {
+        width: 100%;
+        height: auto;
+    }
+
+    h3 {
+        font-size: 120%;
+        width: 4em;
+        position: absolute;
+
+        right: 8%;
+        top: 40%;
+    }
+
+    .photo {
+        position: absolute;
+        display: block;
+        top: 5%;
+        left: 0;
+        .size(70%, 90%);
+
+        img {
+            display: none;
+        }
+    }
+
+    .btn {
+        position: absolute;
+        bottom: 8%;
+        right: 1%;
+        display: block;
+        .size(27%, 28%);
+        text-align: center;
+
+        em {
+            display: block;
+            margin-top: 44%;
+            color: #fff;
+            text-indent: -1em;
+            font-weight: 700;
+            font-size: 12px;
+        }
+    }
+}
+
+.group-0 {
+    color: @group-color-0;
+}
+
+.group-1 {
+    color: @group-color-1;
+
+    .btn {
+        right: 6%;
+        bottom: 4%;
+
+        em {
+        }
+    }
+}
+.group-2 {
+    color: @group-color-2;
+
+    h3 {
+        top: 45%;
+        right: 5%;
+    }
+
+    .btn {
+        right: 4%;
+        bottom: 0;
+    }
+}
+.group-3 {
+    color: @group-color-3;
+
+    h3 {
+        top: 30%;
+        right: 5%;
+    }
+
+    .btn {
+        right: 2%;
+        bottom: 0;
+    }
+}
+.group-4 {
+    color: @group-color-4;
+
+    h3 {
+        top: 40%;
+        right: 7%;
+    }
+
+    .btn {
+        bottom: 4%;
+        right: 3%;
+
+        em {
+            margin-top: 40%;
+        }
+    }
+
+}
+.group-5 {
+    color: @group-color-5;
+
+    h3 {
+        top: 45%;
+        right: 7%;
+    }
+
+    .btn {
+        bottom: 1%;
+        right: 4%;
+
+        em {
+        }
+    }
+}
