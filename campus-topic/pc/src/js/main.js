@@ -29,7 +29,7 @@ define(function (require) {
 
     function vote(index, data) {
         if (isVoted) {
-            alert('今天已投票，请明天再来！')
+            alert('今天已投票，请明天再来！');
             return false;
         }
         var pageBtn = $('.group .btn').eq(index);

@@ -10,6 +10,7 @@ var less = require('gulp-less');
 var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
+var jshint = require('gulp-jshint');
 
 var projects = ['campus-pc', 'campus-mobile'];
 var config = {
@@ -33,10 +34,6 @@ projects.forEach(function (project, i) {
     if (!dir) {
         return false;
     }
-
-    // gulp.task(project + 'clean', function (cb) {
-    //     del([dir + '/asset'], cb);
-    // });
 
     gulp.task(project + 'js', function() {
         return gulp.src(dir + '/' + paths.js)
@@ -79,6 +76,12 @@ projects.forEach(function (project, i) {
         gulp.watch(dir + '/' + paths.less, [project +'less']);
     });
 
+    gulp.task(project + 'test', function () {
+        return gulp.src(dir + '/' + paths.js)
+            .pipe(jshint())
+            .pipe(jshint.reporter('default'));
+    });
+
     gulp.task(project + 'build', [
         // project + 'clean', 
         project + 'uglify', 
@@ -86,10 +89,20 @@ projects.forEach(function (project, i) {
     ]);
 });
 
+
+
 gulp.task('build', (function () {
     var tasks = [];
     projects.forEach(function (proj, i) {
         tasks.push(proj + 'build');
+    });
+    return tasks;
+})());
+
+gulp.task('test', (function () {
+    var tasks = [];
+    projects.forEach(function (proj, i) {
+        tasks.push(proj + 'test');
     });
     return tasks;
 })());
