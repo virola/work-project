@@ -1,1 +1,1 @@
-define(function(require){function n(){require(["jquery"],function(n){n(".btn").on("click",function(){if(t)return alert(i),!1;var e=n(this),r=e.children("em"),u=parseInt(r.text(),10)+1;return e.find("em").text(u),t=1,!1})})}var t,e={},i="您今天已点过赞，请明天再来！";return e.init=function(){n()},e});
+var main=function(){function n(){$(".btn").on("click",function(){if(t)return alert(r),!1;var n=$(this),i=n.children("em"),e=parseInt(i.text(),10)+1;return n.find("em").text(e),t=1,!1})}var t,i={},r="您今天已点过赞，请明天再来！";return i.init=function(){n()},i}();main.init();

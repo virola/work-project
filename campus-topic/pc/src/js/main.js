@@ -4,24 +4,22 @@ define(function (require) {
     var exports = {};
 
     function initHeader() {
-        require(['jquery'], function ($) {
 
-            // 给登录和注册链接自动加上返回当前页的URL
-            $('a.add-redirect').each(function (i, item) {
-                var link = $(item).attr('href');
-                var url = window.location.href;
+        // 给登录和注册链接自动加上返回当前页的URL
+        $('a.add-redirect').each(function (i, item) {
+            var link = $(item).attr('href');
+            var url = window.location.href;
 
-                link += (link.indexOf('?') > -1 ? '&' : '?') + 'redict_url=' + encodeURIComponent(url);
+            link += (link.indexOf('?') > -1 ? '&' : '?') + 'redict_url=' + encodeURIComponent(url);
 
-                $(item).attr('href', link);
-            });
+            $(item).attr('href', link);
+        });
 
-            // 微信浮层的弹出
-            $('.weixin').on('mouseover', function () {
-                $(this).children('div').show();
-            }).on('mouseout', function () {
-                $(this).children('div').hide();
-            });
+        // 微信浮层的弹出
+        $('.weixin').on('mouseover', function () {
+            $(this).children('div').show();
+        }).on('mouseout', function () {
+            $(this).children('div').hide();
         });
     }
 
@@ -44,61 +42,57 @@ define(function (require) {
     }
 
     function bindPageEvents() {
-        require(['jquery'], function ($) {
 
-            $('.group .btn').on('click', function () {
-                var btn = $(this);
-                var index = $('.group .btn').index(btn);
-                
-                vote(index);
-                return false;
-            });
+        $('.group .btn').on('click', function () {
+            var btn = $(this);
+            var index = $('.group .btn').index(btn);
+            
+            vote(index);
+            return false;
+        });
 
-            $('.popup .btn').on('click', function () {
-                var btn = $(this);
-                var index = $('.popup .btn').index(btn);
+        $('.popup .btn').on('click', function () {
+            var btn = $(this);
+            var index = $('.popup .btn').index(btn);
 
-                vote(index);
-                return false;
-            });
+            vote(index);
+            return false;
+        });
 
-            $('.photo').on('click', function () {
-                var _me = $(this);
-                var index = $('.photo').index(_me);
-                showPopup(index);
-                return false;
-            });
+        $('.photo').on('click', function () {
+            var _me = $(this);
+            var index = $('.photo').index(_me);
+            showPopup(index);
+            return false;
+        });
 
-            $('.mask').on('click', function () {
-                $(this).hide();
-                $('.popup').hide();
-            });
+        $('.mask').on('click', function () {
+            $(this).hide();
+            $('.popup').hide();
+        });
 
-            $('.popup-close').on('click', function () {
-                $(this).closest('.popup').hide();
-                $('.mask').hide();
+        $('.popup-close').on('click', function () {
+            $(this).closest('.popup').hide();
+            $('.mask').hide();
 
-                return false;
-            });
+            return false;
         });
     }
 
     function showPopup(index) {
-        require(['jquery'], function ($) {
-            var popup = $('.popup-' + index);
-            if (popup.size() > 0) {
-                popup.show();
-                var left = ($(window).width() - popup.width()) / 2;
-                var top = Math.max($(window).scrollTop() + 100, 550);
+        var popup = $('.popup-' + index);
+        if (popup.size() > 0) {
+            popup.show();
+            var left = ($(window).width() - popup.width()) / 2;
+            var top = Math.max($(window).scrollTop() + 100, 550);
 
-                popup.css({
-                    left: left + 'px',
-                    top: top + 'px'
-                });
-            }
+            popup.css({
+                left: left + 'px',
+                top: top + 'px'
+            });
+        }
 
-            $('.mask').show().height($(document.documentElement).height());
-        });
+        $('.mask').show().height($(document.documentElement).height());
     }
 
     exports.init = function () {
