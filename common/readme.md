@@ -2,6 +2,7 @@
 =====
 @潇湘晨报新媒体部-产品研发组
 
+
 ## PC端
 
 ### 公共库
@@ -47,10 +48,12 @@ jquery-ui从**1.11**版本之后开始支持AMD规范，因此如果要使用jqu
 
 目录规范示例：
 
-    slide.html
-    slide.js
-    slide.css
-    slide.md
+    s1.94uv.com/module/common/    
+    |-- slide.html
+    |-- slide.js
+    |-- slide.css
+    |-- slide.md
+    |-- ...
 
 
 #### slide 幻灯片
@@ -116,10 +119,12 @@ Swipe 为移动的 web 应用带来了新的交互方式，可以让移动 web �
 
 目录规范示例：
 
-    slide.html
-    slide.js
-    slide.css
-    slide.md
+    s2.94uv.com/module/common/    
+    |-- slide.html
+    |-- slide.js
+    |-- slide.css
+    |-- slide.md
+    |-- ...
 
 
 
