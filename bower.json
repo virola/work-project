@@ -15,6 +15,7 @@
     "jquery": "~1.11.1",
     "est": "https://github.com/ecomfe/est.git",
     "html5shiv": "~3.7.2",
-    "zeptojs": "~1.1.4"
+    "zeptojs": "~1.1.4",
+    "swipejs": "https://github.com/thebird/Swipe.git"
   }
 }

@@ -1,0 +1,51 @@
+body {
+  font: 16px/1.2 "Merriweather Sans", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+img {
+  border: none;
+}
+a {
+  outline: none;
+  text-decoration: none;
+  color: #333333;
+}
+em,
+i,
+strong,
+b {
+  font-weight: 400;
+  font-style: normal;
+}
+.clear {
+  *zoom: 1;
+}
+.clear:before,
+.clear:after {
+  display: table;
+  content: "";
+}
+.clear:after {
+  clear: both;
+}
