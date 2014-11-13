@@ -2,9 +2,9 @@
 =====
 @潇湘晨报新媒体部-产品研发组
 
-##PC端
+## PC端
 
-###公共库
+### 公共库
 第三方依赖的基础库。存放目录：
 
     s1.94uv.com/module/dep
@@ -24,7 +24,7 @@ jQuery基础库从1.7之后的版本均支持异步模块加载，使用时需�
 
 jquery-ui从**1.11**版本之后开始支持AMD规范，因此如果要使用jquery-ui的异步模块加载，那么需要使用**1.11**之后的版本；
 
-- 文档： (如何使用遵循AMD规范的jquery-ui)[http://learn.jquery.com/jquery-ui/environments/amd/]
+- 文档： [如何使用遵循AMD规范的jquery-ui](http://learn.jquery.com/jquery-ui/environments/amd/)
 
 如果要使用1.11之前的版本，那么只能用**同步引用**的方式引入jQuery和jQuery-ui。
 
@@ -82,6 +82,14 @@ zepto.js <http://zeptojs.com> 提供和jQuery类似的API，更适合移动端�
 目录： `s2.94uv.com/module/dep/zeptojs`
 
 - `zepto-1.1.4.min.js`
+
+#### Swipe.js
+Swipe JS 是一个轻量级的移动滑动组件，支持 1:1 的触摸移动，阻力以及防滑。
+Swipe 为移动的 web 应用带来了新的交互方式，可以让移动 web 应用展现更多的内容。
+
+目录： `s2.94uv.com/module/dep/swipejs`
+
+- `swipe.min.js`
 
 #### jQuery mobile
 
