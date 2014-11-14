@@ -1,7 +1,9 @@
 /**
  * @file 高校推广移动端JS逻辑
+ * @author  virola
  */
-var main = (function (require) {
+
+define(function (require) {
 
     var exports = {};
 
@@ -9,6 +11,10 @@ var main = (function (require) {
     var VOTE_TEXT = '您今天已点过赞，请明天再来！';
 
     function bindVoteEvents() {
+        var url = window.location.href;
+        var loginUrl = 'http://m.my.' + pageParams.siteDomain 
+            + '/userCenter/login.html?redict_url=' + encodeURIComponent(url);
+
         $('.btn').on('click', function () {
             if (isVoted) {
                 alert(VOTE_TEXT);
@@ -17,12 +23,32 @@ var main = (function (require) {
 
             var pageBtn = $(this);
 
-            var cnt = pageBtn.children('em');
-            var number = parseInt(cnt.text(), 10) + 1;
+            var data = $.extend({}, pageParams.postData, {
+                'option_id': pageBtn.attr('option')
+            });
             
-            pageBtn.find('em').text(number);
+            $.post(pageParams.urlVote, data, function( ret ) {
+                if (ret.status == 'ok') {
 
-            isVoted = 1;
+                    var cnt = pageBtn.children('em');
+                    var number = parseInt(cnt.text(), 10) + 1;
+
+                    if (ret['vote_count']) {
+                        number = ret['vote_count'];
+                    }
+                    
+                    pageBtn.find('em').text(number);
+
+                    isVoted = 1;
+                    alert(ret.msg);
+                } 
+                else {
+                    alert(ret.msg);
+                    if (ret.login == -1) {
+                        window.location.href = loginUrl;
+                    }
+                }
+            }, 'json');
 
             return false;
         });
@@ -33,6 +59,4 @@ var main = (function (require) {
     };
 
     return exports;
-})();
-
-main.init();
+});

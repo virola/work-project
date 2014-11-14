@@ -106,9 +106,25 @@
         <a href="#" class="reg-btn"></a>
     </div>
 </div>
+<script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
+<script>
+var pageParams = {
+    urlVote: '../test/ajax.php',
+    postData: {
+        'project_id': 10
+    },
+    siteDomain: '94uv.com'
+};
 
-
-<script src="asset/js/zepto.min.js"></script>
-<script src="asset/js/main.js"></script>
+require.config({
+    baseUrl: 'asset/js',
+    paths: {
+        jquery: 'http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194'
+    }
+});
+require(['main', 'jquery'], function (main, $) {
+    main.init();
+});
+</script>
 </body>
 </html>
