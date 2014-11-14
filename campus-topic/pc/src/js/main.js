@@ -37,7 +37,7 @@ define(function (require) {
         var layerBtn = $('.popup .btn').eq(index);
 
         var data = $.extend({}, pageParams.postData, {
-            'option_id': $(this).attr('option')
+            'option_id': pageBtn.attr('option')
         });
         
         $.post(pageParams.urlVote, data, function( ret ) {
