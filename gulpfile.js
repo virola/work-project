@@ -21,7 +21,8 @@ var config = {
         dir: 'campus-topic/mobile'
     },
     'magazine': {
-        dir: 'magazine'
+        dir: 'magazine',
+        concat: false
     }
 };
 
@@ -38,10 +39,14 @@ projects.forEach(function (project, i) {
         return false;
     }
 
+    var isConcat = config[project].concat || 1;;
     gulp.task(project + 'js', function() {
-        return gulp.src(dir + '/' + paths.js)
-            .pipe(concat('main.js'))
-            .pipe(gulp.dest(dir + '/' + 'asset/js'));
+        var stream = gulp.src(dir + '/' + paths.js);
+        if (isConcat == false) {
+            stream = stream.pipe(concat('main.js'));
+        }
+            
+        return stream.pipe(gulp.dest(dir + '/' + 'asset/js'));
     });
 
 
@@ -120,6 +125,14 @@ gulp.task('debug', (function () {
     var tasks = [];
     projects.forEach(function (proj, i) {
         tasks.push(proj);
+    });
+    return tasks;
+})());
+
+gulp.task('watch', (function () {
+    var tasks = [];
+    projects.forEach(function (proj, i) {
+        tasks.push(proj + 'watch');
     });
     return tasks;
 })());
