@@ -9,6 +9,20 @@
 </head>
 <body>
 
+<div class="page"></div>
 
+<script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
+<script>
+    require.config({
+        baseUrl: 'src/js',
+        paths: {
+            jquery: 'http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194'
+        }
+    });
+
+    require(['main', 'jquery'], function (main, $) {
+        main.init();
+    });
+</script>
 </body>
 </html>

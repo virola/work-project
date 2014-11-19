@@ -10,6 +10,8 @@
 
 ##如何模块化
 
+### 定义AMD规范模块
+
 参考示例：
 
     // index.js
@@ -27,6 +29,31 @@
         return index;    
     });
 
+### 让同步引用的脚本兼容AMD规范
+
+以`util`模块为例：
+
+    // util.js
+
+    var util = window.util || {};
+
+    util.trim = function () {
+        // ...
+    };
+
+    // other methods
+    // ...
+
+
+    // 在脚本末尾加上判断是否AMD异步加载
+    // 如果是的话，就定义一个AMD模块
+    if (typeof define === 'function' && define.amd) {
+        define('util', [], function() {
+            return util;
+        });
+    }
+
+
 
 ## 如何使用AMD模块
 
@@ -43,6 +70,9 @@
     
     <body>
         
+        <!-- content elements -->
+
+        <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-8/esl.min.js"></script>
         <script>
         require.config({
             // 设定JS加载的基础路径，根据项目实际情况修改
@@ -62,4 +92,16 @@
     </html>
     
 
+###模块加载器
+建议使用[ESL](https://github.com/ecomfe/esl)
 
+CDN引用：
+
+    <!-- normal -->
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.js"></script>
+
+    <!-- min -->
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
+
+    <!-- source -->
+    <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.source.js"></script>
