@@ -33,7 +33,7 @@ define(['jquery', 'util'], function ($) {
     var tpl = ''
         + '<section style="background-image: url(#{bgurl})">'
         + '<div class="page">'
-        +     '<h2>《#{title}》</h2>'
+        +     '<h2>#{title}</h2>'
         +     '<p>#{content}</p>'
         + '</div>'
         + '</section>';
