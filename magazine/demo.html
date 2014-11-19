@@ -20,7 +20,7 @@
 <script src="asset/swipejs/swipe.min.js"></script>
 <script>
     require.config({
-        baseUrl: 'src/js',
+        baseUrl: 'asset/js',
         paths: {
             jquery: 'http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194'
         }
@@ -29,11 +29,13 @@
     require(['data', 'jquery'], function (data, $) {
         data.render({
             url: 'mock/data.json'
+        }, function () {
+            require(['main'], function (main) {
+                main.init();
+            });
         });
 
-        require(['main'], function (main) {
-            main.init();
-        });
+        
     });
 
     

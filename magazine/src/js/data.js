@@ -5,13 +5,17 @@ define(['jquery', 'util'], function ($) {
 
     var IMG_BASE = 'mock/bg/';
 
-    exports.render = function (options) {
+    exports.render = function (options, callback) {
         var url = options.url;
 
         $.getJSON(url).done(function (json) {
             console.log(json);
 
             $('#content').html(getHtml(json.pages));
+
+            if (callback) {
+                callback();
+            }
         });
     };
 

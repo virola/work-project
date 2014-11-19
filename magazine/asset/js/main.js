@@ -1,14 +1,1 @@
-
-define(function (require) {
-
-
-    var exports = {};
-
-    exports.init = function () {
-        var slider = new Swipe($('#slide')[0], {
-            
-        });
-    };
-
-    return exports;
-});
+define(function(){var n={};return n.init=function(){new Swipe($("#slide")[0],{})},n});
