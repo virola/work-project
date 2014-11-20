@@ -51,6 +51,8 @@ define(['jquery', 'util'], function ($, util) {
 
     var imgMap = {};
 
+    var firstImg;
+
     function getImg() {
         var index = Math.ceil(Math.random() * 10);
         if (imgMap[index]) {
@@ -66,8 +68,17 @@ define(['jquery', 'util'], function ($, util) {
 
     function getPage(item) {
         item.bgurl = getImg();
+        if (!firstImg) {
+            firstImg = item.bgurl;
+        }
         return util.format(tpl, item);
     }
+
+    exports.getFirstImg = function () {
+        var url = window.location.href;
+        var baseIndex = url.lastIndexOf('/');
+        return url.substr(0, baseIndex) + '/' + firstImg;
+    };
 
     return exports;
 });

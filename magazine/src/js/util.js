@@ -58,11 +58,13 @@ util.weixin = (function () {
     // 分享数据
     var shareData;
 
+    var networkType;
+
     function onBridgeReady() {
         WeixinJSBridge.invoke(
             'getNetworkType', {}, 
             function (e) {
-                WeixinJSBridge.log(e.err_msg);
+                networkType = e['err_msg'];
             }
         );
 
@@ -87,11 +89,19 @@ util.weixin = (function () {
         });
     }
 
+    function onShareComplete() {
+        // ...
+    }
+
+    exports.getNetworkType = function () {
+        return networkType;
+    };
+
     exports.init = function (options) {
         options = options || {};
         var docContent = document.querySelector('head>meta[name="description"]');
         shareData = {
-            icon: options.icon || '/favicon.ico',
+            icon: options.icon,
             title: options.title || document.title,
             link: options.link || window.location.href,
             content: options.content || (docContent ? docContent.content : document.title)

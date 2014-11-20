@@ -24,7 +24,8 @@
         baseUrl: 'asset/js',
         paths: {
             jquery: 'http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194'
-        }
+        },
+        urlArgs: 'v=20141120'
     });
 
     require(['util', 'data', 'jquery'], function (util, data, $) {
@@ -36,14 +37,10 @@
             });
 
             util.weixin.init({
-                icon: data.getImg()
+                icon: data.getFirstImg()
             });
         });
-
-        
     });
-
-    
 </script>
 </body>
 </html>
