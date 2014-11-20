@@ -81,7 +81,7 @@ define(['jquery', 'util'], function ($, util) {
         return util.format(tpl, item);
     }
 
-    exports.getFirstImg = function () {
+    function getFirstImg() {
         var url = window.location.href;
         var baseIndex = url.lastIndexOf('/');
         return url.substr(0, baseIndex) + '/' + firstImg;
