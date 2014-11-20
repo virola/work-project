@@ -13,11 +13,10 @@
 
 <div class="main">
     <div id="slide" class="swipe">
-        <div class="swipe-wrap" id="content">
-
-        </div>
+        <div class="swipe-wrap" id="content"></div>
     </div>
 </div>
+
 <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
 <script src="asset/swipejs/swipe.min.js"></script>
 <script>
@@ -36,7 +35,9 @@
                 main.init();
             });
 
-            util.weixin.init();
+            util.weixin.init({
+                icon: data.getImg()
+            });
         });
 
         

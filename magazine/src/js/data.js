@@ -62,6 +62,8 @@ define(['jquery', 'util'], function ($, util) {
         return IMG_BASE + index + '.jpg'
     }
 
+    exports.getImg = getImg;
+
     function getPage(item) {
         item.bgurl = getImg();
         return util.format(tpl, item);

@@ -68,21 +68,21 @@ util.weixin = (function () {
 
         WeixinJSBridge.on('menu:share:appmessage', function () {
             WeixinJSBridge.invoke('sendAppMessage', {
-                img_url: shareData.icon,
-                link: shareData.link,
-                desc: shareData.content,
-                title: shareData.title
+                'img_url': shareData.icon,
+                'link': shareData.link,
+                'desc': shareData.content,
+                'title': shareData.title
             }, onShareComplete);
         });
 
         WeixinJSBridge.on('menu:share:timeline', function () {
             WeixinJSBridge.invoke('shareTimeline', {
-                img_url: shareData.icon,
-                img_width: 640,
-                img_height: 640,
-                link: shareData.link,
-                desc: shareData.content,
-                title: shareData.title
+                'img_url': shareData.icon,
+                'img_width': 640,
+                'img_height': 900,
+                'link': shareData.link,
+                'desc': shareData.content,
+                'title': shareData.title
             }, onShareComplete);
         });
     }
