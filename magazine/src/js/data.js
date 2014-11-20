@@ -5,13 +5,15 @@ define(['jquery', 'util'], function ($, util) {
 
     var IMG_BASE = 'mock/bg/';
 
+    var shareData = {};
+
     exports.render = function (options, callback) {
         var url = options.url;
 
         $.getJSON(url).done(function (json) {
             $('#content').html(getHtml(json.pages));
 
-            document.title = json.name;
+            document.title = shareData.title = json.name;
 
             var desc = document.querySelector('head>meta[name="description"]');
             var keywords = document.querySelector('head>meta[name="keywords"]');
@@ -21,7 +23,7 @@ define(['jquery', 'util'], function ($, util) {
             }
 
             if (desc) {
-                desc.content = json.description;
+                desc.content = shareData.content = json.description;
             }
 
             if (callback) {
@@ -64,7 +66,12 @@ define(['jquery', 'util'], function ($, util) {
         return IMG_BASE + index + '.jpg'
     }
 
-    exports.getImg = getImg;
+    exports.getShareData = function () {
+        shareData.icon = getFirstImg();
+        shareData.link = window.location.href;
+
+        return shareData;
+    };
 
     function getPage(item) {
         item.bgurl = getImg();
