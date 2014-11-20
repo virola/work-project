@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <title>magazine</title>
+<meta name="keywords" content="magazine" />
+<meta name="description" content="magazine" />
 <link rel="stylesheet" type="text/css" href="asset/css/main.css">
 </head>
 <body>
@@ -26,13 +28,15 @@
         }
     });
 
-    require(['data', 'jquery'], function (data, $) {
+    require(['util', 'data', 'jquery'], function (util, data, $) {
         data.render({
             url: 'mock/data.json'
         }, function () {
             require(['main'], function (main) {
                 main.init();
             });
+
+            util.weixin.init();
         });
 
         

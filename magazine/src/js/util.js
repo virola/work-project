@@ -37,8 +37,85 @@ util.format = function (source, opts) {
     return source;
 };
 
-if ( typeof define === 'function' && define.amd ) {
-    define( 'util', [], function() {
+/**
+ * 微信分享代码
+ * 
+ * @param {Object} options 参数选项
+ * @param {string} options.title 分享标题
+ */
+util.weixin = (function () {
+    
+    var _blankfn = function () {};
+
+    if (typeof WeixinJSBridge == 'undefined') {
+        return {
+            init: _blankfn
+        };
+    }
+
+    var exports = {};
+
+    // 分享数据
+    var shareData;
+
+    function onBridgeReady() {
+        WeixinJSBridge.invoke(
+            'getNetworkType', {}, 
+            function (e) {
+                WeixinJSBridge.log(e.err_msg);
+            }
+        );
+
+        WeixinJSBridge.on('menu:share:appmessage', function () {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                img_url: shareData.icon,
+                link: shareData.link,
+                desc: shareData.content,
+                title: shareData.title
+            }, onShareComplete);
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function () {
+            WeixinJSBridge.invoke('shareTimeline', {
+                img_url: shareData.icon,
+                img_width: 640,
+                img_height: 640,
+                link: shareData.link,
+                desc: shareData.content,
+                title: shareData.title
+            }, onShareComplete);
+        });
+    }
+
+    exports.init = function (options) {
+        options = options || {};
+        var docContent = document.querySelector('head>meta[name="description"]');
+        shareData = {
+            icon: options.icon || '/favicon.ico',
+            title: options.title || document.title,
+            link: options.link || window.location.href,
+            content: options.content || (docContent ? docContent.content : document.title)
+        };
+
+        if (typeof WeixinJSBridge == 'undefined') {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            }
+            else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        }
+        else {
+            onBridgeReady();
+        }
+    };
+
+    return exports;
+})();
+
+if (typeof define === 'function' && define.amd) {
+    define('util', [], function () {
         return util;
     });
 }

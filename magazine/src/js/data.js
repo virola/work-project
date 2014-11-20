@@ -1,5 +1,5 @@
 
-define(['jquery', 'util'], function ($) {
+define(['jquery', 'util'], function ($, util) {
 
     var exports = {};
 
@@ -9,9 +9,20 @@ define(['jquery', 'util'], function ($) {
         var url = options.url;
 
         $.getJSON(url).done(function (json) {
-            console.log(json);
-
             $('#content').html(getHtml(json.pages));
+
+            document.title = json.name;
+
+            var desc = document.querySelector('head>meta[name="description"]');
+            var keywords = document.querySelector('head>meta[name="keywords"]');
+
+            if (keywords) {
+                keywords.content = json.keywords;
+            }
+
+            if (desc) {
+                desc.content = json.description;
+            }
 
             if (callback) {
                 callback();

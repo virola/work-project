@@ -8,6 +8,8 @@ define(function (require) {
         var slider = new Swipe($('#slide')[0], {
             
         });
+
+        
     };
 
     return exports;
