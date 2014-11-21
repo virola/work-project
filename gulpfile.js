@@ -12,7 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var jshint = require('gulp-jshint');
 
-var projects = ['campus-pc', 'campus-mobile', 'magazine'];
+var projects = ['campus-pc', 'campus-mobile', 'magazine', 'newmaga'];
 var config = {
     'campus-pc': {
         dir: 'campus-topic/pc'
@@ -23,6 +23,11 @@ var config = {
     'magazine': {
         dir: 'magazine',
         concat: false
+    },
+    'newmaga': {
+        dir: 'new-maga',
+        concat: false,
+        less: 'single'
     }
 };
 
@@ -68,7 +73,11 @@ projects.forEach(function (project, i) {
     });
 
     gulp.task(project + 'less', function () {
-        gulp.src(dir + '/' + paths.lessDest)
+        var lesspath = paths.lessDest;
+        if (config[project].less && config[project].less == 'single') {
+            lesspath = paths.less;
+        }
+        gulp.src(dir + '/' + lesspath)
             .pipe(less())
             .pipe(gulp.dest(dir + '/' + 'asset/css'));
     });

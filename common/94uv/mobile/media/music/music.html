@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>music</title>
+
+<style>
+body {
+    background: #000;
+    font-family: "Microsoft YaHei", "微软雅黑", "MicrosoftJhengHei", "华文细黑", STHeiti, MingLiu;
+}
+
+.music-switcher {
+    position: absolute;
+    top: 32px;
+    right: 30px;
+    width: 20px;
+    display: block;
+    z-index: 9999;
+}
+</style>
+</head>
+<body>
+    <img id="music-switch-on" class="music-switcher" src="img/music-on.png" alt="">
+    <img id="music-switch-off" class="music-switcher" src="img/music-off.png" alt="">
+
+<script>
+
+(function () {
+    var onBtn = document.getElementById('music-switch-on');
+    var offBtn = document.getElementById('music-switch-off');
+
+    offBtn.style.display = 'none';
+
+    onBtn.addEventListener('click', function () {
+        offBtn.style.display = 'block';
+        onBtn.style.display = 'none';
+    }, false);
+
+    offBtn.addEventListener('click', function () {
+        onBtn.style.display = 'block';
+        offBtn.style.display = 'none';
+    }, false);
+})();
+
+</script>
+</body>
+</html>
