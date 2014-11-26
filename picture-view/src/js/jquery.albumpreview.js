@@ -138,7 +138,7 @@ $.fn.albumpreview = function (options) {
             }
 
             var buttonClick = function (event) {
-                var target = this;
+                var target = event.target;
                 var go = target.getAttribute('data-go');
                 var live = target.getAttribute('data-live');
 
@@ -165,14 +165,7 @@ $.fn.albumpreview = function (options) {
                         window.open(source || show || src);
                         break;
                     case 'hide':
-                        $panel.show();
-                        $albumpreview.hide();
-                        $albumpreview.remove();
-                        activeIndex = -1;
-                        activeBox = null;
-
-                        $panel.data('albumpreview', null);
-
+                        disposePreview();
                         break;
                     case 'prev': 
                         showImage(activeIndex - 1);
@@ -195,6 +188,17 @@ $.fn.albumpreview = function (options) {
             $albumpreview.bind('click', '[data-go]', buttonClick);
             $panel.data('albumpreview', $albumpreview);
         }
+
+        var disposePreview = function () {
+            $panel.show();
+            $albumpreview.hide();
+            $albumpreview.remove();
+            activeIndex = -1;
+            activeBox = null;
+
+            $panel.data('albumpreview', null);
+            $panel.get(0).scrollIntoView();
+        };
 
 
         // 大图相册预览区域
