@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>album preview plugin</title>
+
+<script src="http://s1.94uv.com/zhitiao/dep/html5shiv/dist/html5shiv.min.js"></script>
+<link rel="stylesheet" href="asset/css/jquery.albumpreview.css">
+<link rel="stylesheet" href="asset/css/demo.css">
+
+<script>
+function resizePic_temp(e, t, i, s, n) {
+    function r(e, t, i, s) {
+        var n = 0,
+            r = e,
+            a = t;
+        switch (e > i && (n += 1), t > s && (n += 2), n) {
+            case 1:
+                r = i, a = t * i / e;
+            case 2:
+                a = s, r = e * s / t;
+            case 3:
+                a = t / s > e / i ? s : t * i / e, r = t / s > e / i ? e * s / t : i
+        }
+        return 0 != n && (l = !0), [r, a]
+    }
+    var a = t || 120,
+        c = i || 120,
+        l = !1,
+        p = new Image;
+    p.src = e.src;
+    var h = r(p.width, p.height, a, c);
+    return e.style.width = h[0] + "px", e.style.height = h[1] + "px", "function" == typeof n && n.apply(this, arguments), e.style.visibility = "visible", 1 == s && (e.style.marginTop = (i - parseInt(h[1])) / 2 + "px"), p = null, l
+}
+
+function loadPic(mImg, options) {
+    var tempImg = document.createElement('img');
+    mImg.onload = null;
+    mImg.loading = true;
+    var maxWidth = 400;
+    var maxHeight = 75;
+
+    if (options != null) {
+        maxWidth = options['width'] != null ? options['width'] : maxWidth;
+        maxHeight = options['height'] != null ? options['height'] : maxHeight;
+    };
+
+    tempImg.onload = function() {
+        if (maxHeight > 100 && tempImg.height > tempImg.width) {
+            maxWidth = maxHeight;
+            maxHeight = 100000;
+        }
+        resizePic_temp(tempImg, maxWidth, maxHeight);
+
+        var twidth = tempImg.style.width,
+            width = Number(twidth.replace('px', ''));
+
+        if (width < 50) {
+            var pObj = mImg.parentNode,
+                classN = pObj.className;
+            if (classN == 'vpic-wrap') {
+                mImg.parentNode.className = 'vpic-wrap vpic-small';
+            }
+        }
+        mImg.style.width = tempImg.style.width;
+        mImg.style.height = tempImg.style.height;
+        mImg.src = tempImg.src;
+        mImg.loaded = true;
+        mImg.loading = null;
+        this.onload = null;
+    };
+    tempImg.src = mImg.getAttribute('data-src');
+}
+</script>
+</head>
+<body>
+
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_6.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://view.jqueryfuns.com/2014/3/10/347_83d5cac31b66868eef4c76077dce08f2/images/01.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://view.jqueryfuns.com/2014/3/10/347_83d5cac31b66868eef4c76077dce08f2/images/01.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_6.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_6.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+<dl>
+    <dt><a href="#">[ 同城 ] 来谈一谈你觉得的很显唱功的歌</a></dt>
+    <dd>
+        <p>来谈一谈你觉得的很显唱功的歌 大中午的睡不着觉，再听沙宝亮的《暗香？，觉得这首最考验唱功了。 你们还有要补充的吗？？</p>
+        <div class="album-panel">
+            <ul class="picture-preview clearfix">
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_10.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_10.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_6.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_1.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_7.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_2.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_8.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_3.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+                <li>
+                    <img class="art-zoom" data-bigpic="http://virola.qiniudn.com/flower_9.jpg" src="asset/img/img.png" data-src="http://virola.qiniudn.com/flower_4.jpg" onload="loadPic(this, {'width': 400, 'height': 90});">
+                </li>
+            </ul>
+
+        </div>
+    </dd>
+</dl>
+
+<script src="http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+<script src="asset/js/jquery.albumpreview.js"></script>
+<script>
+$(function () {
+    $('.picture-preview').albumpreview({
+        imgClass: 'art-zoom',
+        showAttr: 'data-bigpic',
+        path: 'asset/img',
+        maxWidth: 554,
+        borderWidth: 10,
+        left: '向左旋转',
+        right: '向右旋转',
+        source: '',
+        hide: '收起',
+        appendTo: '.album-panel'
+    });
+});
+
+</script>
+</body>
+</html>
