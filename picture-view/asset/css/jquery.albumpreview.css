@@ -93,23 +93,34 @@
   overflow: hidden;
   visibility: hidden;
 }
-a.ui-preview-left {
+.ui-preview-buttons .ui-preview-hide {
   -webkit-border-bottom-right-radius: 0px;
   -webkit-border-top-right-radius: 0px;
   -moz-border-radius-bottomright: 0px;
   -moz-border-radius-topright: 0px;
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
+  border-right: 0;
+}
+.ui-preview-buttons .ui-preview-hide span {
+  display: none;
+}
+a.ui-preview-left {
   margin-right: 0px;
   border-right: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
 }
 a.ui-preview-right {
   margin-right: 0px;
   margin-left: 0px;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  border-radius: 0px;
-  border-right: none;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
 }
 a.ui-preview-source {
   -webkit-border-bottom-left-radius: 0px;

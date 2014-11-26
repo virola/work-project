@@ -18,6 +18,9 @@ $.fn.albumpreview = function (options) {
     var template = [
         '<div class="ui-preview-toolbar" style="display:none">',
             '<span class="ui-preview-buttons" style="display:none">',
+                '<a href="#" data-go="hide" class="ui-preview-hide"><span></span>',
+                    options.hide,
+                '</a>',
                 '<a href="#" data-go="left" class="ui-preview-left"><span></span>',
                     options.left,
                 '</a>',
@@ -27,9 +30,7 @@ $.fn.albumpreview = function (options) {
                 options.source ? '<a href="#" data-go="source" class="ui-preview-source"><span></span>' : '',
                     options.source,
                 '</a>',
-                '<a href="#" data-go="hide" class="ui-preview-hide"><span></span>',
-                    options.hide,
-                '</a>',
+                
             '</span>',
             '<span class="ui-preview-loading">',
                 '<img data-live="stop" src="',
@@ -413,7 +414,7 @@ var imgRotate = $.imgRotate = (function () {
                 'progid:DXImagetransform.Microsoft.Matrix(',
                     'M11=' + Math.cos(degree) + ',M12=-' + Math.sin(degree) +',',
                     'M21=' + Math.sin(degree) +',M22=' + Math.cos(degree) + ',',
-                    'SizingMethod=\'auto expand\''
+                    'SizingMethod=\'auto expand\'',
                 ')'
             ].join('');
 

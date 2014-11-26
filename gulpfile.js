@@ -12,7 +12,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var jshint = require('gulp-jshint');
 
-var projects = ['campus-pc', 'campus-mobile', 'magazine', 'newmaga', 'desserts'];
+var projects = ['campus-pc', 'campus-mobile', 'magazine', 'newmaga', 'desserts', 'pic'];
 var config = {
     'campus-pc': {
         dir: 'campus-topic/pc'
@@ -29,7 +29,12 @@ var config = {
         concat: false,
         less: 'single'
     },
-    'desserts': {}
+    'desserts': {},
+    'pic': {
+        dir: 'picture-view',
+        concat: false,
+        less: 'single'
+    }
 };
 
 var paths = {
