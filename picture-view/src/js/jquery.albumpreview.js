@@ -124,7 +124,6 @@ $.fn.albumpreview = function (options) {
         var maxWidth = options.maxWidth || 'auto';
         var maxHeight = options.maxHeight || 99999;
         maxWidth = maxWidth - options.borderWidth * 2;
-        console.log(maxWidth);
 
         // gen a showbox
         var initShowBox = function () {
@@ -193,7 +192,7 @@ $.fn.albumpreview = function (options) {
 
             initLargePic();
 
-            $albumpreview.find('[data-go]').bind('click', buttonClick);
+            $albumpreview.bind('click', '[data-go]', buttonClick);
             $panel.data('albumpreview', $albumpreview);
         }
 
@@ -236,7 +235,7 @@ $.fn.albumpreview = function (options) {
 
                         // 大图
                         $thumb.after([
-                            '<img class="ui-preview-show" title="',
+                            '<img class="ui-preview-show" data-go="hide" title="',
                                 img.title,
                                 '" alt="',
                                 img.alt,
@@ -335,8 +334,6 @@ var imgRotate = $.imgRotate = (function () {
             run.height = h;
         };
 
-        
-
         // scale
         var resize = 1;
 
@@ -384,39 +381,39 @@ var imgRotate = $.imgRotate = (function () {
 
         switch (degree) {
             case 0:
-                x = 0;
-                y = 0;
+            case 180:
                 size();
                 break;
             case 90:
-                x = 0;
-                y = -elem.naturalHeight;
-                isSwap = 1;
-                size(true);
-                break;
-            case 180:
-                x = -elem.naturalWidth;
-                y = -elem.naturalHeight
-                size();
-                break;
             case 270:
-                x = -elem.naturalWidth;
-                y = 0;
                 size(true);
                 isSwap = 1;
                 break;
         };
 
+        
+
 
         if (ie && ie < 9) {
+            var deg = degree > 180 ? (degree - 360) : (degree < -180 ? (360 + degree) : degree );
+            var radian = deg * (2 * Math.PI / 360);
+
+            console.log(deg);
+            console.log(radian);
 
             var filter = [
                 'progid:DXImagetransform.Microsoft.Matrix(',
-                    'M11=' + Math.cos(degree) + ',M12=-' + Math.sin(degree) +',',
-                    'M21=' + Math.sin(degree) +',M22=' + Math.cos(degree) + ',',
+                    'M11=' + Math.cos(radian) + ',M12=-' + Math.sin(radian) +',',
+                    'M21=' + Math.sin(radian) +',M22=' + Math.cos(radian) + ',',
                     'SizingMethod=\'auto expand\'',
                 ')'
             ].join('');
+
+            filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + degree / 90 + ')';
+
+            if (radian == 0) {
+                filter = '';   
+            }
 
             $(elem).css('filter', filter);
         }
