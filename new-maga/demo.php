@@ -54,6 +54,15 @@ $data = json_decode($filedata, true);
 <img id="music-switch-on" class="music-switcher" src="http://virola-eko.com/asset/music/img/music-on.png" alt="">
 <img id="music-switch-off" class="music-switcher" src="http://virola-eko.com/asset/music/img/music-off.png" alt="">
 
+<!-- weixin data -->
+<!-- 资源传递 -->
+<!-- 模版ID --><input id="activity-id" type="hidden" value="3464" />  
+<!-- 微信分享信息 --><input id="wx-title" type="hidden" value="[<?php echo $data['name'] ?>]" />
+<!-- 微信分享信息 --><input id="wx-img" type="hidden" value="http://virola-eko.com/topic/magazine/mock/bg/7.jpg" />
+<!-- 微信分享信息 --><input id="wx-con" type="hidden" value="<?php echo $data['description'] ?>" />
+<!-- 微信分享信息 --><input id="wx-link" type="hidden" value="http://virola-eko.com/topic/new-maga/demo.php?from=weixinshare" />
+
+
 <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
 <script src="asset/js/effect.js"></script>
 
@@ -81,7 +90,10 @@ $data = json_decode($filedata, true);
         }, effects[Math.floor(Math.random() * effects.length)]));
 
         util.weixin.init({
-            icon: 'http://virola-eko.com/topic/magazine/mock/bg/7.jpg'
+            icon: $('#wx-img').val(),
+            title: $('#wx-title').val(),
+            content: $('#wx-con').val(),
+            link: $('#wx-link').val()
         });
     });
 </script>

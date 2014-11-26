@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<title>[轻应用] 美味关系</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<link rel="stylesheet" type="text/css" href="../dep/swiper/dist/idangerous.swiper.css">
+
+<link rel="stylesheet" href="asset/css/main.css">
+</head>
+<body class="body">
+<div class="global-ctrl" id="g-ctrl">
+</div>
+
+<div class="page-container">
+    <div class="slide-wrapper" id="slide-main"></div>
+</div>
+
+<script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js"></script>
+<script>
+require.config({
+    baseUrl: 'asset/js',
+    paths: {
+        'jquery': '//s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194',
+        'swiper': '../../../dep/swiper/dist/idangerous.swiper',
+        'swiper-smooth-progress': '../../../dep/swiper/plugin/idangerous.swiper.progress.amd.min'
+    },
+    urlArgs: 'v=20141121'
+});
+
+require(['main', 'weixin'], function (main, wx) {
+    var url = 'data/page.json';
+
+    $.getJSON(url).done(function (json) {
+        wx.init({
+            icon: json.cover,
+            title: json.title,
+            content: json.desc
+        });
+        main.render(json);
+
+        main.init({
+            loop: 1,
+            progress: true
+        });
+    });
+});
+
+</script>
+</body>
+</html>
