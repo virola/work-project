@@ -362,7 +362,7 @@ var imgRotate = $.imgRotate = (function () {
                     height = maxWidth;
                 }
 
-                translateY = -Math.abs(width - height) / 2;
+                translateY = - (width - height) / 2;
             }
             else {
                 if (width > maxWidth) {
