@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>test</title>
+
+<style>
+.test {
+    background-color: #39d;
+    border: 2px solid #3cf;
+    padding: 1em;
+    float: left;
+}
+
+.test > div {
+    background-color: #fff;
+    width: 100px;
+    height: 100px;
+}
+
+.fade-in {
+  -webkit-animation: fadein 5s .1s 1;
+}
+.fade-in,
+.fade-out {
+  -webkit-animation-duration: 2s;
+}
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+#test2 {
+    margin-top: 100px;
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+    -webkit-animation: mymove 5s;  /* Chrome, Safari, Opera */
+    -webkit-animation-play-state: running;  /* Chrome, Safari, Opera */
+    animation: mymove 5s;
+    animation-play-state: running;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    from {
+      left: 0px;
+    }
+    to {
+      left: 200px;
+    }
+}
+
+@keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+}
+</style>
+</head>
+<body>
+<div id="test" class="test"><div>test animation</div></div>
+
+<p><strong>Note:</strong> The animation-play-state property is not supported in Internet Explorer 9 and earlier versions.</p>
+<div id="test2"></div>
+
+<script>
+document.getElementById('test').className += ' fade-in';
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{
+    "title": "[轻应用]美味关系",
+    "desc": "美味关系是一款美食类节目",
+    "cover": "http://virola.qiniudn.com/flower_7.jpg",
+    "version": 2,
+    "globals": {
+        "audio": {
+            "loop": true,
+            "url": "http://virola.qiniudn.com/memorize.mp3"
+        },
+        "arrow": {
+            "type": "vertical",
+            "url": "http://virola.qiniudn.com/up_arrow.png"
+        },
+        "loading": {
+            "type": "text"
+        }
+    },
+    "pages": [
+        {
+            "color": "#f96e57",
+            "background": {
+                "url": "http://www.bz55.com/uploads/allimg/141017/138-14101H10024.png",
+                "posX": "center",
+                "posY": "center",
+                "size": "cover"
+            },
+            "elements": {
+                "text1": {
+                    "type": "type-text",
+                    "text": "美味关系",
+                    "fontSize": "1em",
+                    "fontStyle": "normal",
+                    "color": "#f96e57"
+                },
+                
+                "text1": {
+                    "type": "type-text",
+                    "text": "潇湘晨报新媒体部",
+                    "fontSize": "1em",
+                    "fontStyle": "normal",
+                    "color": "rgb(169, 169, 169)"
+                }
+            }
+        },
+        {
+            "color": "#fff",
+            "background": {
+                "url": "http://bizhi.33lc.com/uploadfile/2013/0912/20130912092036886.jpg",
+                "posX": "center",
+                "posY": "center",
+                "size": "cover"
+            },
+            "elements": {
+                
+            }
+        },
+        {
+            "color": "#fff",
+            "background": {
+                "url": "http://mg.soupingguo.com/bizhi/big/10/257/254/10257254.jpg",
+                "posX": "center",
+                "posY": "center",
+                "size": "cover"
+            },
+            "elements": {}
+        }
+    ]
+}

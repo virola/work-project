@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+.swiper-container {
+  width: 100%;
+  min-height: 520px;
+  text-align: center;
+}
+.swiper-slide {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+.swiper-slide .title {
+  font-size: 22px;
+  margin-bottom: 0;
+  line-height: 45px;
+}
+.swiper-slide p {
+  line-height: 25px;
+  text-align: left;
+  padding: 1em 0 5em;
+}
+.swiper-slide .page {
+  padding: 0 20px;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.swiper-slide .page-first .title {
+  font-size: 30px;
+  text-shadow: 1px 1px 1px #ccc;
+}
+.swiper-slide .page-first p {
+  text-align: center;
+  font-style: normal;
+  line-height: 50px;
+  margin-top: 30px;
+}
+.swiper-slide-active {
+  /* Specific active slide styling: */
+}
+.swiper-slide-visible {
+  /* Specific visible slide styling: */
+}
+/* ===============================================================
+Pagination Styles
+================================================================*/
+.swiper-pagination-switch {
+  /* Stylize pagination button: */
+}
+.swiper-active-switch {
+  /* Specific active button style: */
+}
+.swiper-visible-switch {
+  /* Specific visible button style: */
+}
+.pagination {
+  position: absolute;
+  z-index: 20;
+  left: 10px;
+  bottom: 10px;
+}
+.swiper-pagination-switch {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background: #555;
+  margin: 0 5px 5px;
+  opacity: .8;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+.swiper-active-switch {
+  background: #fff;
+}
