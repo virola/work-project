@@ -93,33 +93,39 @@ $.fn.albumpreview = function (options) {
 
         var imgLength = $panel.find(selector).length;
 
+        // showbox is open ?
+        var isOpen;
+
         // 显示一张大图
         function showImage(index) {
             if (index == activeIndex || index < 0 || index > imgLength - 1) {
                 return;
             }
 
+            showPicBox();
+
             var $box = $albumpreview.find('.ui-preview-box').show();
-
-            // show box
-            $albumpreview.show().find('.ui-preview-toolbar').slideDown(150, function () {
-                // setTimeout(function () {
-                    $albumpreview.get(0).scrollIntoView();
-                // }, 1000);
-            });
-
-            
-
             var photos = $box.find('.ui-preview-photo').addClass('ui-preview-hidden');
             photos.eq(index).removeClass('ui-preview-hidden');
 
             activeBox = photos.eq(index);
             activeIndex = index;
 
-            $panel.hide();
+        }
+
+        function showPicBox() {
+            if (!isOpen) {
+
+                // show box
+                $albumpreview.show().find('.ui-preview-toolbar').slideDown(150, function () {
+                    $albumpreview.get(0).scrollIntoView();
+                });
+
+                $panel.hide();
+                isOpen = 1;
+            }
         }
         
-
         // size options
         var maxWidth = options.maxWidth || 'auto';
         var maxHeight = options.maxHeight || 99999;
@@ -198,6 +204,8 @@ $.fn.albumpreview = function (options) {
 
             $panel.data('albumpreview', null);
             $panel.get(0).scrollIntoView();
+
+            isOpen = 0;
         };
 
 
