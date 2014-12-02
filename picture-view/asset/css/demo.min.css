@@ -1,0 +1,5 @@
+/**
+ * pic
+ * @version 2014-12-1 18:5:32
+ */
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}* html .clearfix{height:1%}.clearfix{display:block}.picture-preview{clear:both}.picture-preview li{padding:0;float:left;display:inline;position:relative;margin-right:10px;height:90px;line-height:90px;overflow:hidden}.picture-preview li a{display:block;max-width:534px}.picture-preview li img{cursor:url(../img/zoomin.cur),pointer;vertical-align:middle}.album-panel{position:relative}.album-panel .ui-artzoom{clear:both;position:relative}

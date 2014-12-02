@@ -9,11 +9,15 @@ $.fn.albumpreview = function (options) {
     options = $.extend({}, $.fn.albumpreview.defaults, options);
 
     var loading = options.path + '/loading.gif';
-    var max = options.path + '/zoomin.cur';
-    var min = options.path + '/zoomout.cur';
+    var maxCursor = options.path + '/zoomin.cur';
+    var minCursor = options.path + '/zoomout.cur';
+    var nextCursor = options.path + '/bigpicnext.cur';
+    var prevCursor = options.path + '/bigpicprev.cur';
 
-    max = 'url(\'' + max + '\'), pointer';
-    min = 'url(\'' + min + '\'), pointer';
+    maxCursor = 'url(\'' + maxCursor + '\'), pointer';
+    minCursor = 'url(\'' + minCursor + '\'), pointer';
+    nextCursor = 'url(\'' + nextCursor + '\'), pointer';
+    prevCursor = 'url(\'' + prevCursor + '\'), pointer';
 
     var template = [
         '<div class="ui-preview-toolbar" style="display:none">',
@@ -51,8 +55,8 @@ $.fn.albumpreview = function (options) {
                     loading,
                 '">',
             '</div>',
-            '<a class="ui-preview-photo-prev" href="#" data-go="prev"></a>',
-            '<a class="ui-preview-photo-next" href="#" data-go="next"></a>',   
+            '<a class="ui-preview-photo-prev" href="#" data-go="prev" style="cursor:' + prevCursor + '"></a>',
+            '<a class="ui-preview-photo-next" href="#" data-go="next" style="cursor:' + nextCursor + '"></a>',   
         '</div>'
     ].join('');
 
@@ -255,7 +259,9 @@ $.fn.albumpreview = function (options) {
                                 targetpic,
                                 '" style="width:',
                                 width,
-                                'px;height:',
+                                'px;cursor:',
+                                minCursor,
+                                ';height:',
                                 height, // IE8 超长图片height属性失效BUG，改用CSS
                                 'px;position:absolute;left:0;top:0;background:transparent"',
                             ' />'
@@ -271,9 +277,9 @@ $.fn.albumpreview = function (options) {
                         var $show = $albumpreview.find('.ui-preview-show');
                         $thumb.removeAttr('class').removeAttr('data-live').hide();
                         $show.css({
-                            position: 'static',
-                            left: 'auto',
-                            top: 'auto'
+                            position: '',
+                            left: '',
+                            top: ''
                         });
                         
                         $albumpreview.removeClass('ui-preview-noLoad');
@@ -296,7 +302,7 @@ $.fn.albumpreview = function (options) {
 
         // 预加载指针形状图标
         $panel.find(selector).css({
-            cursor: max 
+            cursor: maxCursor 
         });
     });
     

@@ -179,6 +179,7 @@ a.ui-preview-source:active span {
 .ui-preview-photo-wrap {
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 .ui-preview-photo-wrap img {
   display: block;
@@ -188,12 +189,13 @@ a.ui-preview-source:active span {
 }
 .ui-preview-photo-prev,
 .ui-preview-photo-next {
+  background: url(about:blank);
   position: absolute;
+  z-index: 5;
   width: 33%;
   _height: 9999px;
-  top: 35px;
+  top: 0;
   bottom: 0;
-  background: transparent;
 }
 .ui-preview-photo-prev {
   left: 0;
@@ -210,7 +212,6 @@ a.ui-preview-source:active span {
   display: none;
 }
 .ui-preview-show {
-  background: transparent;
   border: 3px solid #FFF!important;
   border-radius: 3px;
   margin: 0 auto;

@@ -117,7 +117,7 @@ projects.forEach(function (project, i) {
     });
 
     var isConcat = config[project].concat || 1;;
-    gulp.task(project + 'js', function() {
+    gulp.task(project + 'js', [project + 'cleanjs'], function() {
         var stream = gulp.src(dir + '/' + paths.js);
         if (isConcat == false) {
             stream = stream.pipe(concat('main.js'));
@@ -127,7 +127,7 @@ projects.forEach(function (project, i) {
     });
 
     // uglify
-    gulp.task(project + 'uglify', [project + 'cleanjs', project + 'js'], function() {
+    gulp.task(project + 'uglify', [project + 'js'], function() {
         return gulp.src([dir + '/' + 'asset/js/*.js'])
             .pipe(rename({suffix: '.min'}))
             .pipe(uglify({
@@ -148,7 +148,7 @@ projects.forEach(function (project, i) {
     // });
 
     // less handle
-    gulp.task(project + 'less', function () {
+    gulp.task(project + 'less', [project + 'cleancss'], function () {
         var lesspath = paths.lessDest;
         if (config[project].less && config[project].less == 'single') {
             lesspath = paths.less;
@@ -159,8 +159,8 @@ projects.forEach(function (project, i) {
     });
 
     // cssmin 
-    gulp.task(project + 'cssmin', [project + 'cleancss', project + 'less'], function () {
-        gulp.src(dir + '/' + 'asset/css/*.css')
+    gulp.task(project + 'cssmin', function () {
+        gulp.src([dir + '/' + 'asset/css/*.css'])
             .pipe(rename({suffix: '.min'}))
             .pipe(minifycss())
             .pipe(header(banner, { project: project, nowStr: nowStr } ))
