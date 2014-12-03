@@ -159,7 +159,7 @@ projects.forEach(function (project, i) {
     });
 
     // cssmin 
-    gulp.task(project + 'cssmin', function () {
+    gulp.task(project + 'cssmin', [project + 'less'], function () {
         gulp.src([dir + '/' + 'asset/css/*.css'])
             .pipe(rename({suffix: '.min'}))
             .pipe(minifycss())

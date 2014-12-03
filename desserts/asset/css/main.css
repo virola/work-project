@@ -53,6 +53,12 @@ b {
 * {
   box-sizing: border-box;
 }
+dl,
+dt,
+dd {
+  margin: 0;
+  padding: 0;
+}
 figure {
   margin: 0;
   padding: 0;
@@ -151,13 +157,21 @@ figure {
   background-repeat: no-repeat;
 }
 .s-homepage {
-  background-image: url(http://virola.qiniudn.com/flower_7.jpg);
+  position: absolute;
+  z-index: 1001;
+  width: 100%;
+  height: 100%;
+  /*background-image: url(../img/page/bg-page1.jpg);*/
 }
-.s-intro {
-  background-image: url(http://virola.qiniudn.com/flower_1.jpg);
+.s-page1 {
+  background-image: url(../img/page/bg-page2.png);
+  color: #fff;
+}
+.s-page2 {
+  background-image: url(../img/page/bg-page3.jpg);
 }
 .s-deserts {
-  background-image: url(http://virola.qiniudn.com/flower_2.jpg);
+  background: #b78a53;
 }
 .deserts-wrap {
   padding: 1em;
@@ -247,58 +261,57 @@ figure {
   background-color: #ff2a1a;
   color: #fff;
 }
-.s-page {
-  text-align: center;
-}
-.s-page article {
+.s-page article,
+.s-page-foods article,
+.s-page-video article {
   padding: 10px;
 }
-.s-page .title {
-  margin-top: 1.5em;
-  margin-bottom: .5em;
-  font-size: 24px;
+.s-page .title,
+.s-page-foods .title,
+.s-page-video .title {
+  margin-top: 1em;
+  margin-bottom: 10px;
+  text-align: center;
 }
-.s-page .sub-title {
-  font-size: 20px;
-  text-indent: 3em;
+.s-page .title img,
+.s-page-foods .title img,
+.s-page-video .title img {
+  width: 153px;
+}
+.s-page {
+  text-align: center;
+  color: #fff;
+}
+.s-page article {
+  position: relative;
 }
 .s-page .pic-album {
-  display: -webkit-box;
-  /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;
-  /* OLD - Firefox 19- (doesn't work very well) */
-  display: -ms-flexbox;
-  /* TWEENER - IE 10+ */
-  display: -webkit-flex;
-  /* NEW - Chrome */
-  display: flex;
-  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  /* vertical */
-  -webkit-flex-direction: row;
-  /* column, row-reverse, column-reverse */
-  -ms-flex-direction: row;
-  flex-direction: row;
-  margin-top: 2em;
+  /*.flex-box();
+        .flex-h();*/
+  *zoom: 1;
+}
+.s-page .pic-album:before,
+.s-page .pic-album:after {
+  display: table;
+  content: "";
+}
+.s-page .pic-album:after {
+  clear: both;
+}
+.s-page .pic-album dl {
+  width: 50%;
+  float: left;
+}
+.s-page .pic-album dt {
+  color: #fff;
+  font-weight: bold;
 }
 .s-page .pic-album img {
   display: block;
   width: 100%;
 }
-.s-page .pic-album li {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin: 10px 0;
-}
-.s-page .pic-album li:first-child {
-  margin-right: 10px;
-}
-.s-page .pic-album li img {
-  margin: 0 0 10px;
+.s-page-foods .pic-album {
+  opacity: .3;
 }
 .s-page-video .video {
   position: relative;
@@ -324,8 +337,11 @@ figure {
   width: 80px;
   height: 80px;
 }
-.s-page-1 {
-  background-color: #fffdd7;
+.s-page-shufulei {
+  background-color: #f2a94b;
+}
+.s-page-paofu {
+  background-color: #a96c35;
 }
 /*
 ==============================================

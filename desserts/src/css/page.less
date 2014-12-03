@@ -2,6 +2,11 @@
 @color-makalong: #c54278;
 @color-shufulei: #f2a94b;
 @color-heisenlin: #67452c;
+@color-shuiguota: #ea893c;
+@color-yishinaidong: #cb3a4b;
+@color-paofu: #a96c35;
+
+@color-all: #b78a53;
 
 .page-container {
     position: absolute;
@@ -40,15 +45,22 @@
 
 
 .s-homepage {
-    background-image: url(http://virola.qiniudn.com/flower_7.jpg);
+    position: absolute;
+    z-index: 1001;
+    .size(100%);
+    /*background-image: url(../img/page/bg-page1.jpg);*/
 }
 
-.s-intro {
-    background-image: url(http://virola.qiniudn.com/flower_1.jpg);
+.s-page1 {
+    background-image: url(../img/page/bg-page2.png);
+    color: #fff;
+}
+.s-page2 {
+    background-image: url(../img/page/bg-page3.jpg);
 }
 
 .s-deserts {
-    background-image: url(http://virola.qiniudn.com/flower_2.jpg);
+    background: @color-all;
 }
 
 .deserts-wrap {
@@ -151,48 +163,57 @@
 
 
 // 甜品详情页
-.s-page {
-    text-align: center;
-
+.s-page, .s-page-foods, .s-page-video {
     article {
         padding: 10px;
     }
 
     .title {
-        margin-top: 1.5em;
-        margin-bottom: .5em;
-        font-size: 24px;
+        margin-top: 1em;
+        margin-bottom: 10px;
+        text-align: center;
+
+        img {
+            width: 153px;
+        }
     }
-    .sub-title {
-        font-size: 20px;
-        text-indent: 3em;
+}
+.s-page {
+    text-align: center;
+    color: #fff;
+
+    article {
+        position: relative;
     }
 
     .pic-album {
-        .flex-box();
-        .flex-h();
+        /*.flex-box();
+        .flex-h();*/
+        .clearfix();
 
-        margin-top: 2em;
+        dl {
+            width: 50%;
+            float: left;
+        }
+
+        dt {
+            color: #fff;
+            font-weight: bold;
+        }
 
         img {
             display: block;
             width: 100%;
         }
-
-        li {
-            .flex-item(1);
-            margin: 10px 0;
-
-            &:first-child {
-                margin-right: 10px;
-            }
-
-            img {
-                margin: 0 0 10px;
-            }
-        }
     }
 
+}
+
+// 食材页
+.s-page-foods {
+    .pic-album {
+        opacity: .3;
+    }
 }
 
 // 视频页
@@ -226,7 +247,11 @@
     .size(80px);
 }
 
-// 舒芙蕾页面
-.s-page-1 {
-    background-color: #fffdd7;
+// 单个页面
+.s-page-shufulei {
+    background-color: @color-shufulei;
+}
+
+.s-page-paofu {
+    background-color: @color-paofu;
 }

@@ -14,92 +14,13 @@ define(['jquery'], function ($) {
     // 全局控制区域
     var globalDom = $('#g-ctrl');
 
-    exports.render = function (data) {
-        
-        renderGlobal(data.globals);
-        renderPages(data.pages);
-    };
-
-    function renderGlobal(options) {
-        if (options.audio) {
-            var wrap = $('<div>').addClass('audio-ctrl').appendTo(globalDom);
-            var btn = $('<div>').addClass('player-btn').appendTo(wrap);
-
-            var music = $('<audio>').addClass('bg-music').attr({
-                'src': options.audio.url,
-                'loop': options.audio.loop,
-                'autoplay': true
-            }).appendTo(btn);
-        }
-
-        if (options.arrow) {
-            $('<img>').addClass('arrow').attr('src', options.arrow.url).appendTo(globalDom);
-        }
-
-        if (options.loading) {
-            $('<div>').addClass('loading').appendTo(globalDom);
-        }
-    }
-
-    function bindMusic() {
-        var btn = $('.player-btn');
-        var music = $('.bg-music');
-        btn.on('click', function () {
-            if (btn.hasClass('player-btn-stop')) {
-                btn.removeClass('player-btn-stop');
-                music[0].play();
-            }
-            else {
-                btn.addClass('player-btn-stop');
-                music[0].pause();
-            }
-        });
-    }
-
     // 页面区域DOM
     var mainDom = $('#slide-main');
 
     var WRAPPER_CLASS = 'slide-wrapper';
     var SLIDE_CLASS = 'slide';
 
-    function renderPages(data) {
-
-        $.each(data, function (i, item) {
-            var slide = $('<section>').addClass(SLIDE_CLASS)
-                .css(getPageStyle(item));
-
-            $.each(item.elements, function (i, item) {
-
-            });
-
-            slide.width($(window).width()).height($(window).height());
-
-            mainDom.append(slide);
-        });
-
-    }
-
-    function getPageStyle(page) {
-        var css = {};
-        
-        if (page.background) {
-            if (page.background.url) {
-                css['background-image'] = 'url(' + page.background.url + ')';
-            }
-            if (page.background.color) {
-                css['background-color'] = page.background.color;
-            }
-            if (page.background.posX || page.background.posY) {
-                css['background-position'] = page.background.posX + ' ' + page.background.posY;
-            }
-            if (page.background.size) {
-                css['background-size'] = page.background.size;
-            }
-        }
-        
-        return css;
-    }
-
+    // swiper effects
     var EFFECTS = {
         scaleIn: {
             // adjustIndex: 1,
@@ -219,35 +140,28 @@ define(['jquery'], function ($) {
 
         allcount = bgs.length;
 
+        // 启动超时监控
+        startTime = new Date();
         start();
 
     };
 
-    /**
-     * @type {Object} swiper组件
-     */
-    var uiSlider;
+    var startTime;
 
     function start() {
-        if (allcount <= loaded) {
-            
-            bindMusic();
+        var nowTime = new Date();
+        var gap = nowTime - startTime;
 
+        if (allcount <= loaded || gap > 3 * 1000) {
+            
             $('.page-container').removeClass('hide');
             globalDom.removeClass('hide');
             $('.loading').addClass('hide');
 
+            // 初始化幻灯片组件
+            initSwiper();
 
-            require(['swiper', 'swiper-smooth-progress'], function (Swiper) {
-                uiSlider = new Swiper('.page-container', cacheOptions);
-
-                uiSlider.addCallback('SlideChangeEnd', handlerChange);
-
-                // bug...
-                handlerChange(uiSlider);
-
-                initTab();
-            });
+            fisrtPage.start();
         }
         else {
             setTimeout(function () {
@@ -255,6 +169,29 @@ define(['jquery'], function ($) {
             }, 500);
         }
     }
+
+
+    /**
+     * @type {Object} swiper组件
+     */
+    var uiSlider;
+
+    // init swiper
+    function initSwiper() {
+        require(['swiper', 'swiper-smooth-progress'], function (Swiper) {
+
+            cacheOptions.noSwiping = 1;
+            cacheOptions.noSwipingClass = 's-homepage';
+            uiSlider = new Swiper('.page-container', cacheOptions);
+
+            uiSlider.addCallback('SlideChangeEnd', handlerChange);
+
+            // bug...
+            handlerChange(uiSlider);
+
+            initTab();
+        });
+    };
 
     // 切换slide之后重新触发页面中的一些动画技能
     function handlerChange(swiper) {
@@ -309,9 +246,34 @@ define(['jquery'], function ($) {
         tab.removeClass(tab.attr('data-style') || '').attr('data-style', currentStyle).addClass(currentStyle);
     }
 
-    function adjustTabHeight() {
+    
+    /**
+     * 首页处理逻辑
+     * 
+     * @type {Object}
+     */
+    var fisrtPage = (function () {
 
-    }
+        var homeImgSelector = '.s-homepage';
+
+        function showFirstPage() {
+            $(homeImgSelector).fadeOut();
+            // $(homeImgSelector).eraser('clear');
+        }
+
+        return {
+            init: function () {
+
+                require(['jquery-eraser'], function ($) {
+                    $(homeImgSelector).eraser({
+                        completeRatio: .4,
+                        completeFunction: showFirstPage
+                    });
+                });
+            },
+            start: showFirstPage
+        };
+    })();
 
     return exports;
 });

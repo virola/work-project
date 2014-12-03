@@ -17,6 +17,7 @@
     "html5shiv": "~3.7.2",
     "zeptojs": "~1.1.4",
     "swipejs": "https://github.com/thebird/Swipe.git",
-    "swiper": "~2.7.0"
+    "swiper": "~2.7.0",
+    "jquery-eraser": "~0.5.1"
   }
 }
