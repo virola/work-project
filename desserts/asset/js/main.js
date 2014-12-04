@@ -117,7 +117,12 @@ define(['jquery'], function ($) {
             preventLinks: false
         }, options, EFFECTS[effect].effects);
 
+        cacheOptions.updateOnImagesReady = 1;
+        cacheOptions.onImagesReady = function (swiper) {
+            start();
+        };
 
+        // 判断背景图片的加载
         var bgs = [];
         $('.slide').each(function (i) {
             $(this).width($(window).width()).height($(window).height());
@@ -142,10 +147,12 @@ define(['jquery'], function ($) {
 
         // 启动超时监控
         startTime = new Date();
-        start();
 
+        // 初始化幻灯片组件
+        initSwiper();
     };
 
+    // 启动时间记录
     var startTime;
 
     function start() {
@@ -154,14 +161,20 @@ define(['jquery'], function ($) {
 
         if (allcount <= loaded || gap > 3 * 1000) {
             
-            $('.page-container').removeClass('hide');
+            // $('.page-container').removeClass('hide');
             globalDom.removeClass('hide');
             $('.loading').addClass('hide');
 
-            // 初始化幻灯片组件
-            initSwiper();
+            // play music
+            music.init();
 
-            fisrtPage.start();
+            // 第一页动作
+            firstPage.start();
+            // fisrtPage.init();
+            
+
+            // 视频页动作
+            videoPage.init();
         }
         else {
             setTimeout(function () {
@@ -169,7 +182,6 @@ define(['jquery'], function ($) {
             }, 500);
         }
     }
-
 
     /**
      * @type {Object} swiper组件
@@ -181,34 +193,53 @@ define(['jquery'], function ($) {
         require(['swiper', 'swiper-smooth-progress'], function (Swiper) {
 
             cacheOptions.noSwiping = 1;
-            cacheOptions.noSwipingClass = 's-homepage';
+            cacheOptions.noSwipingClass = 'swipe-stop';
             uiSlider = new Swiper('.page-container', cacheOptions);
 
-            uiSlider.addCallback('SlideChangeEnd', handlerChange);
-
-            // bug...
-            handlerChange(uiSlider);
+            // uiSlider.addCallback('SlideChangeEnd', handlerChange);
 
             initTab();
         });
     };
 
-    // 切换slide之后重新触发页面中的一些动画技能
-    function handlerChange(swiper) {
-        $(swiper.slides).find('[data-style]').each(function () {
-            var _me = $(this);
-            var style = _me.attr('data-style');
-            $(this).removeClass(style);
-        });
+    /**
+     * music object
+     * 
+     * @type {Object}
+     */
+    var music = (function () {
 
-        var current = swiper.activeSlide();
+        var btn = $('.player-btn');
+        var music = $('.bg-music');
 
-        $(current).find('[data-style]').each(function () {
-            var _me = $(this);
-            var style = _me.attr('data-style');
-            $(this).addClass(style);
-        });
-    }
+        // init music control
+        function initMusic() {
+            
+            btn.on('click', function () {
+                if (btn.hasClass('player-btn-stop')) {
+                    btn.removeClass('player-btn-stop');
+                    music[0].play();
+                }
+                else {
+                    btn.addClass('player-btn-stop');
+                    music[0].pause();
+                }
+            });
+
+            music[0].play();
+        }
+
+        return {
+            init: initMusic,
+            off: function () {
+                music[0].pause();
+            },
+            on: function () {
+                music[0].play();
+            }
+        };
+    })();
+
 
     var TAB_CONTENT_CLASS = 'left-in';
 
@@ -217,7 +248,6 @@ define(['jquery'], function ($) {
             var item = $(this);
             var tab = item.closest('.tab');
             var index = tab.find('.tab-nav>li').index(item);
-            
 
             if (!item.hasClass('current')) {
                 tab.find('.tab-nav>li').removeClass('current');
@@ -239,11 +269,11 @@ define(['jquery'], function ($) {
     function setTabStyles(tab) {
         var item = tab.find('.tab-nav li.current');
         var index = tab.find('.tab-nav>li').index(item);
-        var currentStyle = item.attr('data-style');
+        // var currentStyle = item.attr('data-style');
         var contents = tab.find('.tab-content-item').css({opacity: 0});
 
         contents.removeClass(TAB_CONTENT_CLASS).eq(index).addClass(TAB_CONTENT_CLASS);
-        tab.removeClass(tab.attr('data-style') || '').attr('data-style', currentStyle).addClass(currentStyle);
+        // tab.removeClass(tab.attr('data-style') || '').attr('data-style', currentStyle).addClass(currentStyle);
     }
 
     
@@ -252,7 +282,7 @@ define(['jquery'], function ($) {
      * 
      * @type {Object}
      */
-    var fisrtPage = (function () {
+    var firstPage = (function () {
 
         var homeImgSelector = '.s-homepage';
 
@@ -272,6 +302,124 @@ define(['jquery'], function ($) {
                 });
             },
             start: showFirstPage
+        };
+    })();
+
+
+    /**
+     * 视频页处理逻辑
+     */
+    var videoPage = (function () {
+
+        function initVideo() {
+
+            // youku init
+            youkuPlayer.init();
+
+            $('.video').on('click', function () {
+                var videoId = $(this).data('video-id');
+                youkuPlayer.play(videoId);
+            });
+
+            $('.video').each(function () {
+                youkuPlayer.load($(this).data('video-id'));
+            });
+        }
+
+        return {
+            init: initVideo
+        };
+    })();
+
+    var youkuPlayer = (function () {
+
+        var jsapi = 'http://player.youku.com/jsapi';
+        var isApiReady;
+
+        var frames = {};
+
+        function getFrameId(id) {
+            if (frames[id]) {
+                return frames[id].id;
+            }
+            else {
+                var frame = $('<div/>').addClass('video-player').attr('id', 'videosrc-' + id)
+                    .appendTo($(document.body));
+
+                frames[id] = {
+                    id: frame[0].id,
+                    container: frame[0]
+                };
+                return frame[0].id;
+            }
+        }
+
+        function loadPlayer(videoId) {
+
+            // wait for api ready
+            if (!isApiReady) {
+                setTimeout(function () {
+                    loadPlayer(videoId);
+                }, 500);
+                return false;
+            }
+
+            var videoPlayer = frames[videoId] && frames[videoId].player;
+
+            if (!videoPlayer) {
+                videoPlayer = new YKU.Player(getFrameId(videoId),{
+                    styleid: '0',
+                    client_id: '869b65559e49e583',
+                    vid: videoId,
+                    autoplay: false,
+                    events: {
+                        onPlayEnd: function () {
+                            frames[videoId].container.style.zIndex = -1;
+                        }
+                    }
+                });
+
+                frames[videoId].player = videoPlayer;
+            }
+        }
+
+        function startPlay(videoId) {
+            var container = frames[videoId].container;
+            var player = $(container).find('.x-video-player')[0];
+            if (player) {
+
+                player.play();
+                player.webkitRequestFullScreen();
+
+                music.off();
+            }
+            else if (frames[videoId].player) {
+                $(container).css('zIndex', 9999);
+                frames[videoId].player.playVideo();
+            }
+            else {
+                var tips = $('<span/>').addClass('err-msg').text('用户过多，请稍后再试!').appendTo($(document.body));
+                tips.css({
+                    marginLeft: -tips.outerWidth() / 2 + 'px'
+                }).delay(3000).fadeOut(function () {
+                    $(this).remove();
+                });
+            }
+        }
+
+        return {
+            play: startPlay,
+            load: loadPlayer,
+            init: function () {
+                $.ajax({
+                    url: jsapi,
+                    dataType: 'script',
+                    cache: true,
+                    success: function (data) {
+                        isApiReady = 1;
+                    }
+                });
+            }
         };
     })();
 

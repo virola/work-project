@@ -81,7 +81,7 @@
             canvas.className = that.className;
             canvas.width = width;
             canvas.height = height;
-            ctx.drawImage(that, 0, 0);
+            ctx.drawImage(that, 0, 0, width, height);
             $this.remove();
 
             // prepare context for drawing operations
