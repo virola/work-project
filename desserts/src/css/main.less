@@ -2,6 +2,16 @@
 
 @import '../../../common/94uv/mobile/base';
 
+#debug {
+    position: fixed;
+    z-index: 99999;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    font-size: 12px;
+
+}
+
 * {
     box-sizing: border-box;
 }
@@ -23,7 +33,8 @@ figure {
     margin: 0;
     border: 0;
     overflow: hidden;
-    min-height: 0;
+    min-width: 320px;
+    max-width: 414px;
 }
 
 .full-fill {
@@ -42,7 +53,7 @@ figure {
 
 .audio-ctrl {
     .player-btn {
-        background: url(http://virola.qiniudn.com/control-music.png) 0 0 no-repeat;
+        background: url(../img/control-music.png) 0 0 no-repeat;
         background-size: 72px 36px;
         position: fixed;
         z-index: 9999;
@@ -51,9 +62,12 @@ figure {
         right: 10px;
         .size(36px);
         cursor: pointer;
+        // -webkit-animation: rotate-alltime 1s .1s infinite linear normal none;
+        // animation: rotate-alltime 1s .1s infinite linear normal none;
 
         &-stop {
             background-position: -36px 0;
+            .animation(none);
         }
     }
 }
@@ -91,6 +105,46 @@ figure {
     text-align: center;
     line-height: 4em;
     z-index: 99999;
+
+    &-bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    &-index {
+        position: absolute;
+        top: 50%;
+        margin-top: -60px;
+        width: 100%;
+        min-height: 120px;
+    }
+
+    &-logo, &-circle {
+        position: absolute;
+        left: 50%;
+    }
+
+    &-logo {
+        z-index: 10;
+        width: 100px;
+        margin-left: -50px;
+    }
+
+    &-circle {
+        z-index: 9;
+        width: 356px / 2;
+        margin-left: -356px / 4;
+        top: -30px;
+    }
+}
+
+// for higher browsers than iphone 5s
+@media screen and (min-height: 504px) {
+    .loading-bg {
+        height: 100%;
+    }
 }
 
 // error msg

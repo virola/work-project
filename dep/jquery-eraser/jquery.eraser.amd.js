@@ -190,7 +190,7 @@
                 data.touchY = ty;
                 data.ctx.lineTo(data.touchX, data.touchY);
                 data.ctx.stroke();
-                $this.css({"z-index":$this.css('z-index')==data.zIndex?parseInt(data.zIndex)+1:data.zIndex});
+                $this.css({'z-index': $this.css('z-index') == data.zIndex ? parseInt(data.zIndex) + 1 : data.zIndex});
                 event.preventDefault();
                 break;
               }
@@ -216,11 +216,13 @@
         },
 
         evaluatePoint: function(data, tx, ty) {
+
           var p = Math.floor(tx/data.size) + Math.floor( ty / data.size ) * data.colParts;
 
           if ( p >= 0 && p < data.numParts ) {
             data.ratio += data.parts[p];
             data.parts[p] = 0;
+
             if (!data.complete) {
               p = data.ratio/data.numParts;
               if ( p >= data.completeRatio ) {
@@ -266,7 +268,7 @@
           data.touchY = ty;
           data.ctx.lineTo( data.touchX, data.touchY );
           data.ctx.stroke();
-          $this.css({"z-index":$this.css('z-index')==data.zIndex?parseInt(data.zIndex)+1:data.zIndex});
+          $this.css({'z-index': $this.css('z-index') == data.zIndex?parseInt(data.zIndex)+1:data.zIndex});
           event.preventDefault();
         },
 

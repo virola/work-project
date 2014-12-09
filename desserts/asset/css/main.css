@@ -50,6 +50,14 @@ b {
 .clear:after {
   clear: both;
 }
+#debug {
+  position: fixed;
+  z-index: 99999;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  font-size: 12px;
+}
 * {
   box-sizing: border-box;
 }
@@ -70,7 +78,8 @@ figure {
   margin: 0;
   border: 0;
   overflow: hidden;
-  min-height: 0;
+  min-width: 320px;
+  max-width: 414px;
 }
 .full-fill {
   margin: 0;
@@ -84,7 +93,7 @@ figure {
   display: none;
 }
 .audio-ctrl .player-btn {
-  background: url(http://virola.qiniudn.com/control-music.png) 0 0 no-repeat;
+  background: url(../img/control-music.png) 0 0 no-repeat;
   background-size: 72px 36px;
   position: fixed;
   z-index: 9999;
@@ -97,6 +106,11 @@ figure {
 }
 .audio-ctrl .player-btn-stop {
   background-position: -36px 0;
+  -webkit-animation: none;
+  -moz-animation: none;
+  -ms-animation: none;
+  -o-animation: none;
+  animation: none;
 }
 .arrow {
   position: fixed;
@@ -128,6 +142,40 @@ figure {
   text-align: center;
   line-height: 4em;
   z-index: 99999;
+}
+.loading-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.loading-index {
+  position: absolute;
+  top: 50%;
+  margin-top: -60px;
+  width: 100%;
+  min-height: 120px;
+}
+.loading-logo,
+.loading-circle {
+  position: absolute;
+  left: 50%;
+}
+.loading-logo {
+  z-index: 10;
+  width: 100px;
+  margin-left: -50px;
+}
+.loading-circle {
+  z-index: 9;
+  width: 178px;
+  margin-left: -89px;
+  top: -30px;
+}
+@media screen and (min-height: 504px) {
+  .loading-bg {
+    height: 100%;
+  }
 }
 .err-msg {
   position: absolute;
@@ -190,8 +238,11 @@ figure {
   position: absolute;
   z-index: 1001;
   width: 100%;
-  height: 100%;
-  /*background-image: url(../img/page/bg-page1.jpg);*/
+}
+@media screen and (min-height: 568px) {
+  .s-homepage {
+    height: 100%;
+  }
 }
 .logo img {
   display: block;
@@ -283,10 +334,107 @@ figure {
 .s-page2 p {
   margin-left: 5px;
   min-width: 12em;
-  text-align: center;
   line-height: 22px;
   color: #5e1b3f;
+}
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  /* 左边框的宽 */
+  border-right: 10px solid transparent;
+  /* 右边框的宽 */
+  border-bottom: 16px solid #885772;
+  /* 下边框的长度|高,以及背景色 */
+  font-size: 0;
+  line-height: 0;
+}
+.s-page3 {
+  background-image: url(../img/page/bg-person.jpg);
+}
+.s-page3 header {
+  padding-top: 1em;
+  padding-left: 25px;
+  font-size: 24px;
+  letter-spacing: .2em;
+  color: #e4ced6;
+}
+.s-page3 article {
+  margin: 10px;
+}
+.s-page3 article dl dt {
+  color: #fff;
+  *zoom: 1;
+}
+.s-page3 article dl dt:before,
+.s-page3 article dl dt:after {
+  display: table;
+  content: "";
+}
+.s-page3 article dl dt:after {
+  clear: both;
+}
+.s-page3 article dl dt img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  -webkit-border-radius: 80px;
+  -moz-border-radius: 80px;
+  border-radius: 80px;
+  border: 2px solid #e4ced6;
+}
+.s-page3 article dl dt em {
+  font-size: 18px;
+  line-height: 24px;
+  color: #601240;
+  display: block;
+  font-weight: bold;
+}
+.s-page3 article dl dt cite {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  font-style: normal;
   white-space: nowrap;
+}
+.s-page3 article dl dd {
+  padding: 18px 28px;
+  color: #e4ced6;
+  position: relative;
+}
+.s-page3 article dl dd .arrow-up {
+  position: absolute;
+  top: 9px;
+}
+.s-page3 article dl dd p {
+  background-color: #885772;
+  padding: 9px 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  line-height: 24px;
+  font-size: 14px;
+}
+.s-page3 article .intro-left img {
+  margin-left: 10px;
+  float: left;
+}
+.s-page3 article .intro-left .intro-text {
+  margin-left: 100px;
+}
+.s-page3 article .intro-left .arrow-up {
+  left: 37px;
+}
+.s-page3 article .intro-right img {
+  float: right;
+}
+.s-page3 article .intro-right .intro-text {
+  margin-right: 90px;
+  text-align: right;
+}
+.s-page3 article .intro-right .arrow-up {
+  right: 37px;
 }
 .s-deserts {
   background: #b78a53;
@@ -342,16 +490,20 @@ figure {
   text-align: center;
 }
 .tab-nav li h4 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
 }
 .tab-nav li h5 {
   font-size: 12px;
   font-weight: 400;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
 }
 .tab-nav .current {
   font-weight: 700;
-  text-align: right;
   background-color: #fff;
 }
 .tab-content {
@@ -405,6 +557,7 @@ figure {
 .s-page {
   text-align: center;
   color: #fff;
+  overflow: hidden;
 }
 .s-page article {
   position: relative;
@@ -417,6 +570,9 @@ figure {
 .s-page .title img {
   margin: 0 auto;
   width: 153px;
+}
+.s-page-foods {
+  background-image: url(../img/page/bg-foods.jpg);
 }
 .s-page-foods .pic-album {
   position: relative;
@@ -505,13 +661,54 @@ figure {
   top: 0;
   z-index: -1;
   width: 100%;
+  max-width: 640px;
   height: 100%;
+  background-color: #000;
 }
-.s-page-shufulei {
-  background-color: #f2a94b;
+.video-player-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #000;
+  width: 30px;
+  height: 30px;
+  line-height: 26px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  text-align: center;
+  background-color: #eee;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.video-wrap {
+  position: relative;
+  top: 30%;
 }
 .s-page-paofu {
-  background-color: #a96c35;
+  background-color: #ffddbb;
+  color: #553406;
+}
+.s-page-shuiguota {
+  background-color: #ffd4ad;
+  color: #553406;
+}
+.s-page-naidong {
+  background-color: #faf0d1;
+  color: #553406;
+}
+.s-page-shufulei {
+  background-color: #f8b54a;
+}
+.s-page-heisenlin {
+  background-color: #8d4e2c;
+}
+.s-page-makalong {
+  background-color: #e9b5b0;
 }
 /*
 ==============================================
@@ -525,6 +722,8 @@ arrowing
   -webkit-animation-duration: 1.5s;
   animation-iteration-count: infinite;
   -webkit-animation-iteration-count: infinite;
+  animation-delay: -1s;
+  -webkit-animation-delay: -1s;
 }
 @keyframes arrowing {
   0% {
@@ -546,38 +745,6 @@ arrowing
   }
   100% {
     -webkit-transform: translateY(0%);
-  }
-}
-.arrow-up {
-  -webkit-animation: arrowup 2s 0.5s infinite linear normal forwards;
-  animation: arrowup 2s 0.5s infinite linear normal forwards;
-}
-@-webkit-keyframes arrowup {
-  0% {
-    -webkit-transform: translateY(0px);
-    opacity: 1;
-  }
-  80% {
-    -webkit-transform: translateY(-16px);
-    opacity: .2;
-  }
-  100% {
-    -webkit-transform: translateY(-20px);
-    opacity: 0;
-  }
-}
-@keyframes arrowup {
-  0% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-  80% {
-    transform: translateY(-16px);
-    opacity: .2;
-  }
-  100% {
-    transform: translateY(-20px);
-    opacity: 0;
   }
 }
 .opacity-scale-in {
@@ -613,15 +780,15 @@ arrowing
   }
 }
 .rotate-alltime {
-  -webkit-animation: rotate-alltime 2s 0s infinite linear normal none;
-  animation: rotate-alltime 2s 0s infinite linear normal none;
+  -webkit-animation: rotate-alltime 1s 0.1s infinite linear normal none;
+  animation: rotate-alltime 1s 0.1s infinite linear normal none;
 }
 @-webkit-keyframes rotate-alltime {
   0% {
     -webkit-transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(359deg);
+    -webkit-transform: rotate(-359deg);
   }
 }
 @keyframes rotate-alltime {
@@ -629,7 +796,7 @@ arrowing
     transform: rotate(0deg);
   }
   100% {
-    transform: rotate(359deg);
+    transform: rotate(-359deg);
   }
 }
 .fade-in {

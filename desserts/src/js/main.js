@@ -26,6 +26,8 @@ define(['jquery'], function ($) {
             // adjustIndex: 1,
             effects: {
                 onProgressChange: function (swiper) {
+                    
+
                     for (var i = 0; i < swiper.slides.length; i++) {
                         var slide = swiper.slides[i];
                         var progress = slide.progress;
@@ -63,6 +65,7 @@ define(['jquery'], function ($) {
             // adjustIndex: 1,
             effects: {
                 onProgressChange: function (swiper) {
+                    var currentIndex = swiper.activeIndex;
                     for (var i = 0; i < swiper.slides.length; i++) {
                         var slide = swiper.slides[i];
                         var progress = slide.progress;
@@ -71,12 +74,12 @@ define(['jquery'], function ($) {
                         var opacity;
 
                         if (progress >= 0) {
-                            opacity = 1 - Math.min(Math.abs(progress), 1);
+                            // opacity = 1 - Math.min(Math.abs(progress), 1);
                             scale = 1 - Math.min(Math.abs(progress / 2), 1);
                             translate = progress * swiper.width;  
                         }
                         else {
-                            opacity = 1 - Math.min(Math.abs(progress / 2), 1);
+                            // opacity = 1 - Math.min(Math.abs(progress / 2), 1);
                             scale = 1;
                             translate = 0; 
                         }
@@ -108,6 +111,7 @@ define(['jquery'], function ($) {
     var cacheOptions;
 
     exports.init = function (options) {
+
         var effect = options.effect || 'scaleOut';
         cacheOptions = $.extend({
             wrapperClass: WRAPPER_CLASS,
@@ -124,26 +128,31 @@ define(['jquery'], function ($) {
 
         // 判断背景图片的加载
         var bgs = [];
+        var bgMap = {};
         $('.slide').each(function (i) {
             $(this).width($(window).width()).height($(window).height());
 
             var bgimg = $(this).css('background-image');
-            if (bgimg == 'none') {
+            if (bgimg == 'none' || bgMap[bgimg]) {
                 return;
             }
+            bgMap[bgimg] = 1;
+
             bgimg = bgimg.replace(/\'|\"/, '').replace('url(', '').replace(')', '')
-            bgs[i] = bgimg;
+            bgs.push(bgimg);
 
             var img = new Image();
             img.src = bgimg;
             img.onload = function () {
                 if (this.complete) {
+                    // console.log(1);
                     loaded++;
                 }
             };
         });
 
         allcount = bgs.length;
+
 
         // 启动超时监控
         startTime = new Date();
@@ -159,19 +168,19 @@ define(['jquery'], function ($) {
         var nowTime = new Date();
         var gap = nowTime - startTime;
 
-        if (allcount <= loaded || gap > 3 * 1000) {
+        if (allcount <= loaded || gap > 10 * 1000) {
             
-            // $('.page-container').removeClass('hide');
             globalDom.removeClass('hide');
-            $('.loading').addClass('hide');
+            $('.loading').fadeOut(function () {
+                $(this).remove();
+            });
 
             // play music
             music.init();
 
             // 第一页动作
             firstPage.start();
-            // fisrtPage.init();
-            
+            // firstPage.init();
 
             // 视频页动作
             videoPage.init();
@@ -196,11 +205,29 @@ define(['jquery'], function ($) {
             cacheOptions.noSwipingClass = 'swipe-stop';
             uiSlider = new Swiper('.page-container', cacheOptions);
 
-            // uiSlider.addCallback('SlideChangeEnd', handlerChange);
+            uiSlider.addCallback('SlideChangeEnd', handlerSlideChange);
 
             initTab();
+
+            initFoodsHeight();
         });
     };
+
+    // 更新食材页列表高度
+    function initFoodsHeight() {
+        $('.s-page-foods').each(function () {
+            var pageh = $(this).find('article').height();
+            var winh = $(window).height();
+            if (pageh > winh) {
+                var picWrap = $(this).find('.pic-album');
+                var mh = picWrap.outerHeight();
+                var scale = (winh - $(this).find('.title').outerHeight())/ picWrap.outerHeight();
+
+                var offsetY = mh * (scale - 1) * scale;
+                picWrap.css('transform', 'scale(' + scale + ', ' + scale + ') translateY(' + offsetY + 'px)');
+            }
+        });
+    }
 
     /**
      * music object
@@ -210,32 +237,32 @@ define(['jquery'], function ($) {
     var music = (function () {
 
         var btn = $('.player-btn');
-        var music = $('.bg-music');
+        var audio = $('.bg-music');
 
         // init music control
         function initMusic() {
             
             btn.on('click', function () {
                 if (btn.hasClass('player-btn-stop')) {
-                    btn.removeClass('player-btn-stop');
-                    music[0].play();
+                    music.on();
                 }
                 else {
-                    btn.addClass('player-btn-stop');
-                    music[0].pause();
+                    music.off();
                 }
             });
 
-            music[0].play();
+            audio[0].play();
         }
 
         return {
             init: initMusic,
             off: function () {
-                music[0].pause();
+                btn.addClass('player-btn-stop');
+                audio[0].pause();
             },
             on: function () {
-                music[0].play();
+                btn.removeClass('player-btn-stop');
+                audio[0].play();
             }
         };
     })();
@@ -244,7 +271,7 @@ define(['jquery'], function ($) {
     var TAB_CONTENT_CLASS = 'left-in';
 
     function initTab() {
-        $('.tab-nav').on('click', 'li', function () {
+        $('.tab-nav li').on('touchstart', function () {
             var item = $(this);
             var tab = item.closest('.tab');
             var index = tab.find('.tab-nav>li').index(item);
@@ -255,6 +282,8 @@ define(['jquery'], function ($) {
 
                 setTabStyles(tab);
             }
+
+            return false;
         });
 
         $('.tab-content-item').on('webkitAnimationEnd', function () {
@@ -274,6 +303,18 @@ define(['jquery'], function ($) {
 
         contents.removeClass(TAB_CONTENT_CLASS).eq(index).addClass(TAB_CONTENT_CLASS);
         // tab.removeClass(tab.attr('data-style') || '').attr('data-style', currentStyle).addClass(currentStyle);
+    }
+
+    function handlerSlideChange(swiper) {
+        var slide = $(swiper.activeSlide());
+
+        if (slide.find('.video').size() > 0) {
+            youkuPlayer.init();
+        }
+
+        slide.find('.video').each(function () {
+            youkuPlayer.load($(this).data('video-id'));
+        });
     }
 
     
@@ -296,9 +337,18 @@ define(['jquery'], function ($) {
 
                 require(['jquery-eraser'], function ($) {
                     $(homeImgSelector).eraser({
-                        completeRatio: .4,
+                        size: $(window).width() / 10,
+                        completeRatio: .3,
+                        progressFunction: function (percent) {
+                            // $('#debug').text(percent);
+                        },
                         completeFunction: showFirstPage
                     });
+
+                    // 设定homepage居中
+                    var homepage = $('.s-homepage');
+                    // 不同步的问题
+                    // homepage.css('top', ($(window).height() - homepage.height()) / 2 + 'px' );
                 });
             },
             start: showFirstPage
@@ -314,15 +364,11 @@ define(['jquery'], function ($) {
         function initVideo() {
 
             // youku init
-            youkuPlayer.init();
+            // youkuPlayer.init();
 
             $('.video').on('click', function () {
                 var videoId = $(this).data('video-id');
                 youkuPlayer.play(videoId);
-            });
-
-            $('.video').each(function () {
-                youkuPlayer.load($(this).data('video-id'));
             });
         }
 
@@ -338,19 +384,34 @@ define(['jquery'], function ($) {
 
         var frames = {};
 
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+
         function getFrameId(id) {
             if (frames[id]) {
                 return frames[id].id;
             }
             else {
-                var frame = $('<div/>').addClass('video-player').attr('id', 'videosrc-' + id)
-                    .appendTo($(document.body));
+                var frame = $('<div/>').addClass('video-player').attr('id', 'videoframe-' + id);
+                var close = $('<span>x</span>').addClass('video-player-close')
+                    .on('click', function () {
+                        stop(id);
+                    })
+                    .appendTo(frame);
+                var wrap = $('<div/>').addClass('video-wrap').attr('id', 'videosrc-' + id).appendTo(frame);
+                
+                wrap.css({
+                    width: winWidth + 'px',
+                    height: winHeight * 0.8 + 'px',
+                    top: winHeight * 0.1 + 'px'
+                });
+                frame.appendTo($(document.body));
 
                 frames[id] = {
-                    id: frame[0].id,
+                    id: wrap[0].id,
                     container: frame[0]
                 };
-                return frame[0].id;
+                return frames[id].id;
             }
         }
 
@@ -368,8 +429,8 @@ define(['jquery'], function ($) {
 
             if (!videoPlayer) {
                 videoPlayer = new YKU.Player(getFrameId(videoId),{
-                    styleid: '0',
-                    client_id: '869b65559e49e583',
+                    styleid: '4',  // default '0'
+                    client_id: '--',
                     vid: videoId,
                     autoplay: false,
                     events: {
@@ -384,16 +445,20 @@ define(['jquery'], function ($) {
         }
 
         function startPlay(videoId) {
+            if (!frames[videoId]) {
+                return false;
+            }
+
             var container = frames[videoId].container;
             var player = $(container).find('.x-video-player')[0];
-            if (player) {
-
+            if (player && player.src) {
+                // android 下player.src是空的
                 player.play();
                 player.webkitRequestFullScreen();
-
                 music.off();
             }
             else if (frames[videoId].player) {
+                music.off();
                 $(container).css('zIndex', 9999);
                 frames[videoId].player.playVideo();
             }
@@ -407,10 +472,30 @@ define(['jquery'], function ($) {
             }
         }
 
+        function stop(videoId) {
+            if (!frames[videoId]) {
+                return false;
+            }
+            
+            var container = frames[videoId].container;
+            if (frames[videoId] && frames[videoId].player) {
+                $(container).css('zIndex', -1);
+                frames[videoId].player.pauseVideo();
+            }
+        }
+
+        var isInited;
+
         return {
             play: startPlay,
             load: loadPlayer,
+            stop: stop,
             init: function () {
+                if (isInited) {
+                    return false;
+                }
+                isInited = 1;
+
                 $.ajax({
                     url: jsapi,
                     dataType: 'script',
