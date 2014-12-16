@@ -74,12 +74,12 @@ define(['jquery'], function ($) {
                         var opacity;
 
                         if (progress >= 0) {
-                            // opacity = 1 - Math.min(Math.abs(progress), 1);
+                            opacity = 1 - Math.min(Math.abs(progress), 1);
                             scale = 1 - Math.min(Math.abs(progress / 2), 1);
                             translate = progress * swiper.width;  
                         }
                         else {
-                            // opacity = 1 - Math.min(Math.abs(progress / 2), 1);
+                            opacity = 1 - Math.min(Math.abs(progress / 2), 1);
                             scale = 1;
                             translate = 0; 
                         }
@@ -325,11 +325,12 @@ define(['jquery'], function ($) {
      */
     var firstPage = (function () {
 
+        var RATIO = 0.1;
+
         var homeImgSelector = '.s-homepage';
 
         function showFirstPage() {
             $(homeImgSelector).fadeOut();
-            // $(homeImgSelector).eraser('clear');
         }
 
         return {
@@ -338,7 +339,7 @@ define(['jquery'], function ($) {
                 require(['jquery-eraser'], function ($) {
                     $(homeImgSelector).eraser({
                         size: $(window).width() / 10,
-                        completeRatio: .3,
+                        completeRatio: RATIO,
                         progressFunction: function (percent) {
                             // $('#debug').text(percent);
                         },

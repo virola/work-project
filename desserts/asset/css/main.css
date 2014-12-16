@@ -39,9 +39,6 @@ b {
   font-weight: 400;
   font-style: normal;
 }
-.clear {
-  *zoom: 1;
-}
 .clear:before,
 .clear:after {
   display: table;
@@ -121,9 +118,11 @@ figure {
   height: 17px;
   opacity: .8;
   z-index: 1000;
-  -webkit-animation: arrowing 1s infinite;
-  -o-animation: arrowing 1s infinite;
-  animation: arrowing 1s infinite;
+  -webkit-animation: arrowing 1s 0.5s infinite;
+  -moz-animation: arrowing 1s 0.5s infinite;
+  -ms-animation: arrowing 1s 0.5s infinite;
+  -o-animation: arrowing 1s 0.5s infinite;
+  animation: arrowing 1s 0.5s infinite;
 }
 .device {
   padding: 30px 10px;
@@ -250,11 +249,12 @@ figure {
   height: 64px;
 }
 .s-page1 {
-  background-image: url(../img/page/bg-page2.png);
-  color: #fff;
+  background-color: #ffe203;
+  color: #060202;
 }
 .s-page1 article {
-  margin: 0 20%;
+  width: 19em;
+  margin: 0 auto;
   height: 100%;
   display: -webkit-box;
   /* OLD - iOS 6-, Safari 3.1-6 */
@@ -288,36 +288,24 @@ figure {
   line-height: 24px;
   margin-bottom: 1em;
 }
-.s-page1 .person-intro-small {
-  margin-bottom: 2em;
+.s-page1 .slogan-text {
+  opacity: .4;
+}
+.circle-glow {
+  background-image: -webkit-radial-gradient(closest-corner, rgba(255, 255, 255, 0.8), rgba(255, 255, 225, 0.1));
+  background-image: -moz-radial-gradient(closest-corner, rgba(255, 255, 255, 0.8), rgba(255, 255, 225, 0.1));
+  background-image: -o-radial-gradient(closest-corner, rgba(255, 255, 255, 0.8), rgba(255, 255, 225, 0.1));
+  background-image: radial-gradient(closest-corner, rgba(255, 255, 255, 0.8), rgba(255, 255, 225, 0.1));
+}
+.slide article {
+  position: relative;
+}
+.slide .circle-glow {
+  position: absolute;
+  height: 100%;
   width: 100%;
-  display: -webkit-box;
-  /* OLD - iOS 6-, Safari 3.1-6 */
-  display: -moz-box;
-  /* OLD - Firefox 19- (doesn't work very well) */
-  display: -ms-flexbox;
-  /* TWEENER - IE 10+ */
-  display: -webkit-flex;
-  /* NEW - Chrome */
-  display: flex;
-  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  /* vertical */
-  -webkit-flex-direction: row;
-  /* column, row-reverse, column-reverse */
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: flex-end;
-  align-items: flex-end;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
-}
-.s-page1 .person-small {
-  max-width: 45%;
-}
-.s-page1 .person-text-1 {
-  max-width: 42%;
+  left: 0;
+  top: 0;
 }
 .s-page2 {
   background-image: url(../img/page/bg-page3.jpg);
@@ -350,21 +338,24 @@ figure {
   line-height: 0;
 }
 .s-page3 {
-  background-image: url(../img/page/bg-person.jpg);
+  background-color: #ffee6d;
 }
 .s-page3 header {
-  padding-top: 1em;
+  padding-top: 2.5em;
   padding-left: 25px;
-  font-size: 24px;
-  letter-spacing: .2em;
-  color: #e4ced6;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0c0900;
+}
+.s-page3 header em {
+  letter-spacing: -1px;
+  font-weight: bold;
 }
 .s-page3 article {
   margin: 10px;
 }
 .s-page3 article dl dt {
-  color: #fff;
-  *zoom: 1;
+  color: #000;
 }
 .s-page3 article dl dt:before,
 .s-page3 article dl dt:after {
@@ -381,12 +372,12 @@ figure {
   -webkit-border-radius: 80px;
   -moz-border-radius: 80px;
   border-radius: 80px;
-  border: 2px solid #e4ced6;
+  border: 2px solid #e0c417;
 }
 .s-page3 article dl dt em {
   font-size: 18px;
   line-height: 24px;
-  color: #601240;
+  color: #000;
   display: block;
   font-weight: bold;
 }
@@ -397,18 +388,20 @@ figure {
   line-height: 20px;
   font-style: normal;
   white-space: nowrap;
+  color: #cdb31b;
 }
 .s-page3 article dl dd {
   padding: 18px 28px;
-  color: #e4ced6;
+  color: #fff;
   position: relative;
 }
 .s-page3 article dl dd .arrow-up {
   position: absolute;
   top: 9px;
+  border-bottom-color: #ffdf21;
 }
 .s-page3 article dl dd p {
-  background-color: #885772;
+  background-color: #ffdf21;
   padding: 9px 10px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -529,7 +522,7 @@ figure {
   width: 100%;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 .tab-content .left-in {
@@ -565,14 +558,15 @@ figure {
 }
 .s-page .title {
   margin-bottom: 10px;
+  padding-top: 1em;
   text-align: center;
 }
 .s-page .title img {
   margin: 0 auto;
-  width: 153px;
+  width: 189px;
 }
 .s-page-foods {
-  background-image: url(../img/page/bg-foods.jpg);
+  background-color: #ffe203;
 }
 .s-page-foods .pic-album {
   position: relative;
@@ -602,7 +596,6 @@ figure {
   overflow: auto;
 }
 .s-page-foods .foods-list dl {
-  *zoom: 1;
   margin: 10px 0;
   border-bottom: 1px dotted #8b391b;
   padding-bottom: 2px;
@@ -632,9 +625,17 @@ figure {
   font-family: MV Boli;
   font-style: italic;
 }
+.s-page-video .logo-mark {
+  width: 40px;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  opacity: .7;
+}
 .s-page-video .video {
   position: relative;
   padding: 0 20px;
+  margin-top: 2em;
 }
 .s-page-video .video-food {
   width: 100%;
@@ -645,6 +646,8 @@ figure {
   top: 50%;
   margin-top: -40px;
   margin-left: -40px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }
 .s-page-video .desc {
   text-align: left;
@@ -690,7 +693,7 @@ figure {
   top: 30%;
 }
 .s-page-paofu {
-  background-color: #ffddbb;
+  background-color: #ffa11b;
   color: #553406;
 }
 .s-page-shuiguota {

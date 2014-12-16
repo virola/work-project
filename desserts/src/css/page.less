@@ -4,7 +4,7 @@
 @color-heisenlin: #8d4e2c;
 @color-shuiguota: #ffd4ad;
 @color-naidong: #faf0d1;
-@color-paofu: #ffddbb;
+@color-paofu: #ffa11b;
 
 @color-all: #b78a53;
 
@@ -132,12 +132,14 @@
 
 // 首页美味关系介绍的样式设定
 .s-page1 {
-    background-image: url(../img/page/bg-page2.png);
-    color: #fff;
+    // background-image: url(../img/page/bg-page2.png);
+    background-color: #ffe203;
+    color: #060202;
 
     // width = 150 / 640
     article {
-        margin: 0 20%;
+        width: 19em;
+        margin: 0 auto;
         height: 100%;
 
         .flex-box();
@@ -156,24 +158,26 @@
         margin-bottom: 1em;
     }
 
-    .person-intro-small {
-        // position: relative;
-        margin-bottom: 2em;
+    .slogan-text {
+        opacity: .4;
+    }
+}
+
+.circle-glow {
+    .radial-gradient(closest-corner, rgba(255, 255, 255, 0.8), rgba(255, 255, 225, 0.1));
+}
+
+.slide {
+    article {
+        position: relative;
+    }
+
+    .circle-glow {
+        position: absolute;
+        height: 100%;
         width: 100%;
-        // .clearfix();
-
-        .flex-box();
-        .flex-h();
-        .flex-align(space-between, flex-end);
-    }
-
-    .person-small {
-        max-width: 45%;
-        // .size(130px/2, 188px/2);
-    }
-    .person-text-1 {
-        max-width: 42%;
-        // .size(152px/2, 90px/2);
+        left: 0;
+        top: 0;
     }
 }
 
@@ -212,16 +216,21 @@
 }
 
 .s-page3 {
-    background-image: url(../img/page/bg-person.jpg);
-
-    @main-text-color: #e4ced6;
+    // background-image: url(../img/page/bg-person.jpg);
+    background-color: #ffee6d;
 
     header {
-        padding-top: 1em;
+        padding-top: 2.5em;
         padding-left: 25px;
-        font-size: 24px;
-        letter-spacing: .2em;
-        color: @main-text-color;
+        font-size: 16px;
+        font-weight: bold;
+        // letter-spacing: .2em;
+        color: #0c0900;
+
+        em {
+            letter-spacing: -1px;
+            font-weight: bold;
+        }
     }
 
     article {
@@ -231,20 +240,20 @@
             
 
             dt {
-                color: #fff;
+                color: #000;
                 .clearfix();
 
                 img {
                     display: block;
                     .size(80px);
                     .border-radius(80px);
-                    border: 2px solid @main-text-color;
+                    border: 2px solid #e0c417;
                 }
 
                 em {
                     font-size: 18px;
                     line-height: 24px;
-                    color: #601240;
+                    color: #000;
                     display: block;
                     font-weight: bold;
                 }
@@ -256,21 +265,23 @@
                     line-height: 20px;
                     font-style: normal;
                     white-space: nowrap;
+                    color: #cdb31b;
                 }
             }
 
             dd {
                 padding: 18px 28px;
-                color: @main-text-color;
+                color: #fff;
                 position: relative;
 
                 .arrow-up {
                     position: absolute;
                     top: 9px;
+                    border-bottom-color: #ffdf21;
                 }
 
                 p {
-                    background-color: #885772;
+                    background-color: #ffdf21;
                     padding: 9px 10px;
                     .border-radius(2px);
                     line-height: 24px;
@@ -339,7 +350,6 @@
 
 
 // 美食汇总页
-
 .tab {
 
     .flex-box();
@@ -370,7 +380,6 @@
 
         .current {
             font-weight: 700;
-            // text-align: right;
             background-color: #fff;
         }
     }
@@ -392,7 +401,7 @@
 
             p {
                 width: 100%;
-                .ellipsis(4);
+                .ellipsis(3);
             }
         }
 
@@ -437,11 +446,12 @@
     .title {
         // margin-top: 1em;
         margin-bottom: 10px;
+        padding-top: 1em;
         text-align: center;
 
         img {
             margin: 0 auto;
-            width: 153px;
+            width: 378px/2;
         }
     }
 
@@ -449,7 +459,9 @@
 
 // 食材页
 .s-page-foods {
-    background-image: url(../img/page/bg-foods.jpg);
+    // background-image: url(../img/page/bg-foods.jpg);
+    background-color: #ffe203;
+
     .pic-album {
         position: relative;
         margin: 0 5%;
@@ -513,9 +525,18 @@
 // 视频页
 .s-page-video {
 
+    .logo-mark {
+        width: 40px;
+        position: absolute;
+        right: 20px;
+        bottom: 10px;
+        opacity: .7;
+    }
+
     .video {
         position: relative;
         padding: 0 20px;
+        margin-top: 2em;
 
         &-food {
             width: 100%;
@@ -527,6 +548,7 @@
             top: 50%;
             margin-top: -40px;
             margin-left: -40px;
+            .opacity(50);
         }
     }
 

@@ -2,6 +2,8 @@
 
 @import '../../../common/94uv/mobile/base';
 
+@support-old-ie: false;
+
 #debug {
     position: fixed;
     z-index: 99999;
@@ -62,8 +64,6 @@ figure {
         right: 10px;
         .size(36px);
         cursor: pointer;
-        // -webkit-animation: rotate-alltime 1s .1s infinite linear normal none;
-        // animation: rotate-alltime 1s .1s infinite linear normal none;
 
         &-stop {
             background-position: -36px 0;
@@ -81,9 +81,7 @@ figure {
     height: 17px;
     opacity: .8;
     z-index: 1000;
-    -webkit-animation: arrowing 1s infinite;
-    -o-animation: arrowing 1s infinite;
-    animation: arrowing 1s infinite;
+    .animation(arrowing 1s .5s infinite);
 }
 
 
