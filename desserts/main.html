@@ -57,8 +57,8 @@
 
         <section class="slide s-page3">
             <div class="circle-glow"></div>
-            <header class="title"><em>RECOMMENDATION</em> | 高端推荐</header>
             <article>
+                <header class="title"><em>RECOMMENDATION</em> | 高端推荐</header>
                 <dl class="intro-left">
                     <dt>
                         <img src="asset/img/page/person-1.jpg" alt="马天宁">
@@ -324,6 +324,7 @@
         </section>
 
         <section class="slide s-page s-page-video s-page-paofu">
+            <div class="circle-glow"></div>
             <article>
                 <h2 class="title"><img src="asset/img/page/banner/paofu.png"></h2>
                 <figure class="video" data-video-id="XNzU0MzA5MzIw">
@@ -361,7 +362,7 @@ require.config({
     urlArgs: 'v=20141121'
 });
 
-require(['main', 'weixin'], function (main, wx) {
+require(['main.min', 'weixin.min'], function (main, wx) {
 
     wx.init({
         icon: 'asset/img/page/bg-page1.jpg',
@@ -375,7 +376,8 @@ require(['main', 'weixin'], function (main, wx) {
         loop: 0,
         progress: true,
         keyboardControl: true,
-        initialSlide: 4
+        longSwipesRatio: 0.3,
+        initialSlide: 0
     });
 });
 

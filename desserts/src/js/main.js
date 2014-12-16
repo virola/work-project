@@ -179,8 +179,8 @@ define(['jquery'], function ($) {
             music.init();
 
             // 第一页动作
-            firstPage.start();
-            // firstPage.init();
+            // firstPage.start();
+            firstPage.init();
 
             // 视频页动作
             videoPage.init();
@@ -205,11 +205,16 @@ define(['jquery'], function ($) {
             cacheOptions.noSwipingClass = 'swipe-stop';
             uiSlider = new Swiper('.page-container', cacheOptions);
 
-            uiSlider.addCallback('SlideChangeEnd', handlerSlideChange);
+            // uiSlider.addCallback('SlideChangeStart', handlerSlideChangeStart);
+            uiSlider.addCallback('SlideChangeEnd', handlerSlideChangeEnd);
 
             initTab();
 
             initFoodsHeight();
+
+            // 动画的初始化
+            animation.init();
+            animation.start(0);
         });
     };
 
@@ -228,6 +233,33 @@ define(['jquery'], function ($) {
             }
         });
     }
+
+    var animation = (function () {
+
+        var pages = $('article');
+
+        function start(index) {
+            if (index == null) {
+                return;
+            }
+            pages.eq(index).children().each(function (index) {
+                $(this).delay(400 * index).fadeIn(800);
+            });
+        }
+
+        function slideShow(index) {
+            pages.eq(index).children().each(function (index) {
+                $(this).delay(400 * index).slideDown(800);
+            });
+        }
+
+        return {
+            init: function () {
+                pages.children().hide();
+            },
+            start: start
+        };
+    })();
 
     /**
      * music object
@@ -298,23 +330,29 @@ define(['jquery'], function ($) {
     function setTabStyles(tab) {
         var item = tab.find('.tab-nav li.current');
         var index = tab.find('.tab-nav>li').index(item);
-        // var currentStyle = item.attr('data-style');
         var contents = tab.find('.tab-content-item').css({opacity: 0});
 
         contents.removeClass(TAB_CONTENT_CLASS).eq(index).addClass(TAB_CONTENT_CLASS);
-        // tab.removeClass(tab.attr('data-style') || '').attr('data-style', currentStyle).addClass(currentStyle);
     }
 
-    function handlerSlideChange(swiper) {
-        var slide = $(swiper.activeSlide());
+    function handlerSlideChangeStart(swiper) {
+        // var slide = $(swiper.activeSlide());
+        // console.log(slide);
+    }
 
+    function handlerSlideChangeEnd(swiper) {
+
+        // init video
+        var slide = $(swiper.activeSlide());
         if (slide.find('.video').size() > 0) {
             youkuPlayer.init();
         }
-
         slide.find('.video').each(function () {
             youkuPlayer.load($(this).data('video-id'));
         });
+
+        // init animations
+        animation.start(swiper.activeIndex);
     }
 
     
@@ -325,7 +363,7 @@ define(['jquery'], function ($) {
      */
     var firstPage = (function () {
 
-        var RATIO = 0.1;
+        var RATIO = 0.3;
 
         var homeImgSelector = '.s-homepage';
 

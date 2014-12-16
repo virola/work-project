@@ -323,7 +323,7 @@ figure {
   margin-left: 5px;
   min-width: 12em;
   line-height: 22px;
-  color: #5e1b3f;
+  color: #060202;
 }
 .arrow-up {
   width: 0;
@@ -341,8 +341,9 @@ figure {
   background-color: #ffee6d;
 }
 .s-page3 header {
-  padding-top: 2.5em;
-  padding-left: 25px;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  padding-left: 10px;
   font-size: 16px;
   font-weight: bold;
   color: #0c0900;
@@ -352,7 +353,7 @@ figure {
   font-weight: bold;
 }
 .s-page3 article {
-  margin: 10px;
+  padding: 10px;
 }
 .s-page3 article dl dt {
   color: #000;
@@ -494,6 +495,7 @@ figure {
   -ms-transform: scale(0.8);
   -o-transform: scale(0.8);
   transform: scale(0.8);
+  margin-top: -3px;
 }
 .tab-nav .current {
   font-weight: 700;
@@ -558,7 +560,7 @@ figure {
 }
 .s-page .title {
   margin-bottom: 10px;
-  padding-top: 1em;
+  padding-top: 10%;
   text-align: center;
 }
 .s-page .title img {
@@ -635,10 +637,11 @@ figure {
 .s-page-video .video {
   position: relative;
   padding: 0 20px;
-  margin-top: 2em;
+  margin-top: 10%;
 }
 .s-page-video .video-food {
   width: 100%;
+  border: 2px solid #000;
 }
 .s-page-video .video-play-btn {
   position: absolute;
@@ -694,11 +697,14 @@ figure {
 }
 .s-page-paofu {
   background-color: #ffa11b;
-  color: #553406;
+  color: #000;
 }
 .s-page-shuiguota {
   background-color: #ffd4ad;
   color: #553406;
+}
+.s-page-shuiguota .video-food {
+  border-color: #fff;
 }
 .s-page-naidong {
   background-color: #faf0d1;

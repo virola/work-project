@@ -201,7 +201,7 @@
         margin-left: 5px;
         min-width: 12em;
         line-height: 22px;
-        color: #5e1b3f;
+        color: #060202;
     }
 }
 
@@ -220,8 +220,9 @@
     background-color: #ffee6d;
 
     header {
-        padding-top: 2.5em;
-        padding-left: 25px;
+        padding-top: 1.5em;
+        padding-bottom: 1em;
+        padding-left: 10px;
         font-size: 16px;
         font-weight: bold;
         // letter-spacing: .2em;
@@ -234,7 +235,7 @@
     }
 
     article {
-        margin: 10px;
+        padding: 10px;
 
         dl {
             
@@ -375,6 +376,7 @@
                 font-size: 12px;
                 font-weight: 400;
                 .transform(scale(0.8));
+                margin-top: -3px;
             }
         }
 
@@ -446,7 +448,7 @@
     .title {
         // margin-top: 1em;
         margin-bottom: 10px;
-        padding-top: 1em;
+        padding-top: 10%;
         text-align: center;
 
         img {
@@ -536,10 +538,11 @@
     .video {
         position: relative;
         padding: 0 20px;
-        margin-top: 2em;
+        margin-top: 10%;
 
         &-food {
             width: 100%;
+            border: 2px solid #000;
         }
 
         &-play-btn {
@@ -599,11 +602,15 @@
 // 单个页面
 .s-page-paofu {
     background-color: @color-paofu;
-    color: #553406;
+    color: #000;
 }
 .s-page-shuiguota {
     background-color: @color-shuiguota;
     color: #553406;
+
+    .video-food {
+        border-color: #fff;
+    }
 }
 .s-page-naidong {
     background-color: @color-naidong;
