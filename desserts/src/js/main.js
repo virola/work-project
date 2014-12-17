@@ -423,8 +423,8 @@ define(['jquery'], function ($) {
 
         var frames = {};
 
-        var winHeight = $(window).height();
-        var winWidth = $(window).width();
+        var wrapHeight = $('.page-container').height();
+        var wrapWidth = $('.page-container').width();
 
         function getFrameId(id) {
             if (frames[id]) {
@@ -438,18 +438,21 @@ define(['jquery'], function ($) {
                     })
                     .appendTo(frame);
                 var wrap = $('<div/>').addClass('video-wrap').attr('id', 'videosrc-' + id).appendTo(frame);
-                
-                wrap.css({
-                    width: winWidth + 'px',
-                    height: winHeight * 0.8 + 'px',
-                    top: winHeight * 0.1 + 'px'
-                });
                 frame.appendTo($(document.body));
+
+                wrap.css({
+                    width: wrapWidth + 'px',
+                    height: wrapHeight * 0.8 + 'px',
+                    top: wrapHeight * 0.1 + 'px'
+                });
 
                 frames[id] = {
                     id: wrap[0].id,
                     container: frame[0]
                 };
+
+                
+
                 return frames[id].id;
             }
         }

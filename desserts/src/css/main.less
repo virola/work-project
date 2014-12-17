@@ -4,16 +4,6 @@
 
 @support-old-ie: false;
 
-#debug {
-    position: fixed;
-    z-index: 99999;
-    bottom: 0;
-    left: 0;
-    background-color: #fff;
-    font-size: 12px;
-
-}
-
 * {
     box-sizing: border-box;
 }
@@ -35,8 +25,8 @@ figure {
     margin: 0;
     border: 0;
     overflow: hidden;
-    min-width: 320px;
-    max-width: 414px;
+    max-width: 640px;
+    background-color: #000;
 }
 
 .full-fill {
@@ -53,11 +43,15 @@ figure {
     display: none;
 }
 
+.global-ctrl {
+    position: relative;
+}
+
 .audio-ctrl {
     .player-btn {
         background: url(../img/control-music.png) 0 0 no-repeat;
         background-size: 72px 36px;
-        position: fixed;
+        position: absolute;
         z-index: 9999;
         display: block;
         top: 10px;
