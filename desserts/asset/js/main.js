@@ -110,7 +110,9 @@ define(['jquery'], function ($) {
      */
     var cacheOptions;
 
-    exports.init = function (options) {
+    var YOUKU_ID;
+
+    exports.init = function (options, youkuId) {
 
         var effect = options.effect || 'scaleOut';
         cacheOptions = $.extend({
@@ -120,6 +122,8 @@ define(['jquery'], function ($) {
             mode: 'vertical',
             preventLinks: false
         }, options, EFFECTS[effect].effects);
+
+        YOUKU_ID = youkuId || '';
 
         cacheOptions.updateOnImagesReady = 1;
         cacheOptions.onImagesReady = function (swiper) {
@@ -306,7 +310,6 @@ define(['jquery'], function ($) {
         $('.tab-nav li').on('touchstart', function () {
             var item = $(this);
             var tab = item.closest('.tab');
-            var index = tab.find('.tab-nav>li').index(item);
 
             if (!item.hasClass('current')) {
                 tab.find('.tab-nav>li').removeClass('current');
@@ -329,10 +332,10 @@ define(['jquery'], function ($) {
 
     function setTabStyles(tab) {
         var item = tab.find('.tab-nav li.current');
-        var index = tab.find('.tab-nav>li').index(item);
-        var contents = tab.find('.tab-content-item').css({opacity: 0});
-
-        contents.removeClass(TAB_CONTENT_CLASS).eq(index).addClass(TAB_CONTENT_CLASS);
+        var name = item.data('target');
+        var contents = tab.find('.tab-content-item').css({opacity: 0}).removeClass(TAB_CONTENT_CLASS);
+        var contentTarget = contents.filter('[data-target="' + name + '"]');
+        contentTarget.addClass(TAB_CONTENT_CLASS);
     }
 
     function handlerSlideChangeStart(swiper) {
@@ -472,7 +475,7 @@ define(['jquery'], function ($) {
             if (!videoPlayer) {
                 videoPlayer = new YKU.Player(getFrameId(videoId),{
                     styleid: '4',  // default '0'
-                    client_id: '--',
+                    client_id: YOUKU_ID,
                     vid: videoId,
                     autoplay: false,
                     events: {

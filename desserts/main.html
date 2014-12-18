@@ -363,25 +363,34 @@ require.config({
 });
 
 require(['main.min', 'weixin.min'], function (main, wx) {
+    var path = window.location.href;
+    var baseUrl = path.substr(0, path.lastIndexOf('/') + 1);
 
     wx.init({
-        icon: 'asset/img/page/bg-page1.jpg',
+        icon: baseUrl + 'asset/img/page/bg-page1.jpg',
         title: '美味关系 Bon appétit 第一期',
         width: 320,
         height: 540,
-        content: '美味关系是一档具有互动性的西式美食文化类节目，在我们的大厨彭程老师手中赋予每一件炊具一首旋律，演绎出一段美味的关系。'
+        content: '360秒的时间，感受真正的法式浪漫'
     });
+
+    var youkuId = '--';
 
     main.init({
         loop: 0,
         progress: true,
-        keyboardControl: true,
+        // keyboardControl: true,
         longSwipesRatio: 0.3,
         initialSlide: 0
-    });
+    }, youkuId);
 });
 
 </script>
 <!-- <div id="debug"></div> -->
+
+<!-- statistic -->
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F577d1deeaf26de50b2e45b9ebdcf702b' type='text/javascript'%3E%3C/script%3E"));
 </body>
 </html>

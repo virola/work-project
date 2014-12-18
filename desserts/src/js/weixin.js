@@ -29,7 +29,7 @@ define(function (require) {
 
         WeixinJSBridge.on('menu:share:appmessage', function () {
             WeixinJSBridge.invoke('sendAppMessage', {
-                'img_url': shareData.cover,
+                'img_url': shareData.icon,
                 'link': shareData.link,
                 'desc': shareData.content,
                 'title': shareData.title
@@ -38,7 +38,7 @@ define(function (require) {
 
         WeixinJSBridge.on('menu:share:timeline', function () {
             WeixinJSBridge.invoke('shareTimeline', {
-                'img_url': shareData.cover,
+                'img_url': shareData.icon,
                 'img_width': shareData.width,
                 'img_height': shareData.height,
                 'link': shareData.link,
