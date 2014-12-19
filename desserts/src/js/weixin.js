@@ -6,12 +6,6 @@ define(function (require) {
     
     var _blankfn = function () {};
 
-    if (typeof WeixinJSBridge == 'undefined') {
-        return {
-            init: _blankfn
-        };
-    }
-
     var weixin = {};
 
     // 分享数据
