@@ -19,33 +19,56 @@ define(function (require) {
 
     var networkType;
 
+    function shareFriend() {
+        WeixinJSBridge.invoke('sendAppMessage', {
+            'appid': '',
+            'img_url': shareData.icon,
+            'img_width': shareData.width,
+            'img_height': shareData.height,
+            'link': shareData.link,
+            'desc': shareData.content,
+            'title': shareData.title
+        }, onShareComplete);
+    }
+
+    function shareWeibo() {
+        WeixinJSBridge.invoke('shareWeibo', {
+            'url': shareData.link,
+            'content': shareData.content
+        }, onShareComplete);
+    }
+
+    function shareTimeline() {
+        WeixinJSBridge.invoke('shareTimeline', {
+            'img_url': shareData.icon,
+            'img_width': shareData.width,
+            'img_height': shareData.height,
+            'link': shareData.link,
+            'desc': shareData.content,
+            'title': shareData.title
+        }, onShareComplete);
+    }
+
     function onBridgeReady() {
+
+        WeixinJSBridge.on('menu:share:appmessage', function () {
+            shareFriend();
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function () {
+            shareTimeline()
+        });
+
+        WeixinJSBridge.on('menu:share:weibo', function () {
+            shareWeibo();
+        });
+
         WeixinJSBridge.invoke(
             'getNetworkType', {}, 
             function (e) {
                 networkType = e['err_msg'];
             }
         );
-
-        WeixinJSBridge.on('menu:share:appmessage', function () {
-            WeixinJSBridge.invoke('sendAppMessage', {
-                'img_url': shareData.icon,
-                'link': shareData.link,
-                'desc': shareData.content,
-                'title': shareData.title
-            }, onShareComplete);
-        });
-
-        WeixinJSBridge.on('menu:share:timeline', function () {
-            WeixinJSBridge.invoke('shareTimeline', {
-                'img_url': shareData.icon,
-                'img_width': shareData.width,
-                'img_height': shareData.height,
-                'link': shareData.link,
-                'desc': shareData.content,
-                'title': shareData.title
-            }, onShareComplete);
-        });
     }
 
     function onShareComplete() {
