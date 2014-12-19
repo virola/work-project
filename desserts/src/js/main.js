@@ -23,10 +23,8 @@ define(['jquery'], function ($) {
     // swiper effects
     var EFFECTS = {
         scaleIn: {
-            // adjustIndex: 1,
             effects: {
                 onProgressChange: function (swiper) {
-                    
 
                     for (var i = 0; i < swiper.slides.length; i++) {
                         var slide = swiper.slides[i];
@@ -62,7 +60,6 @@ define(['jquery'], function ($) {
             }
         },
         scaleOut: {
-            // adjustIndex: 1,
             effects: {
                 onProgressChange: function (swiper) {
                     var currentIndex = swiper.activeIndex;
@@ -101,7 +98,6 @@ define(['jquery'], function ($) {
         }
     };
 
-
     var allcount;
     var loaded = 0;
 
@@ -111,8 +107,9 @@ define(['jquery'], function ($) {
     var cacheOptions;
 
     var YOUKU_ID;
+    var YOUKU_JSAPI;
 
-    exports.init = function (options, youkuId) {
+    exports.init = function (options, youkuId, youkuApi) {
 
         var effect = options.effect || 'scaleOut';
         cacheOptions = $.extend({
@@ -124,10 +121,12 @@ define(['jquery'], function ($) {
         }, options, EFFECTS[effect].effects);
 
         YOUKU_ID = youkuId || '';
+        YOUKU_JSAPI = youkuApi || '';
 
         cacheOptions.updateOnImagesReady = 1;
         cacheOptions.onImagesReady = function (swiper) {
             start();
+            youkuPlayer.init();
         };
 
         // 判断背景图片的加载
@@ -172,15 +171,12 @@ define(['jquery'], function ($) {
         var nowTime = new Date();
         var gap = nowTime - startTime;
 
-        if (allcount <= loaded || gap > 10 * 1000) {
+        if (allcount <= loaded && gap > 2 * 1000 && youkuPlayer.isLoaded()) {
             
             globalDom.removeClass('hide');
             $('.loading').fadeOut(function () {
                 $(this).remove();
             });
-
-            // play music
-            music.init();
 
             // 第一页动作
             // firstPage.start();
@@ -219,6 +215,7 @@ define(['jquery'], function ($) {
             // 动画的初始化
             animation.init();
             animation.start(0);
+
         });
     };
 
@@ -312,7 +309,8 @@ define(['jquery'], function ($) {
                 }
             });
 
-            audio[0].play();
+            audio.attr('autoplay', true);
+            music.on();
         }
 
         return {
@@ -372,13 +370,7 @@ define(['jquery'], function ($) {
 
         // init video
         var slide = $(swiper.activeSlide());
-        if (slide.find('.video').size() > 0) {
-            youkuPlayer.init();
-        }
-        slide.find('.video').each(function () {
-            youkuPlayer.load($(this).data('video-id'));
-        });
-
+        
         slide.find('.foods-list').addClass('swipe-stop');
 
         // init animations
@@ -395,29 +387,78 @@ define(['jquery'], function ($) {
 
         var RATIO = 0.3;
 
-        var homeImgSelector = '.s-homepage';
+        // var homeImgSelector = '.home-mask';
 
         function showFirstPage() {
-            $(homeImgSelector).fadeOut();
+            $('.homepage').fadeOut(1500);
+
+            // play music
+            music.init();
         }
+
+        var homeMask = $('.home-mask');
+
+        var originPoint = {};
+
+        var TOUCH_GAP = 10;
 
         return {
             init: function () {
 
-                require(['jquery-eraser'], function ($) {
-                    $(homeImgSelector).eraser({
-                        size: $(window).width() / 10,
-                        completeRatio: RATIO,
-                        progressFunction: function (percent) {
-                            // $('#debug').text(percent);
-                        },
-                        completeFunction: showFirstPage
-                    });
+                var winWidth = $(window).width();
 
-                    // 设定homepage居中
-                    var homepage = $('.s-homepage');
-                    // 不同步的问题
-                    // homepage.css('top', ($(window).height() - homepage.height()) / 2 + 'px' );
+                var imgs = homeMask.find('img');
+
+                homeMask.find('img[data-animation]').each(function () {
+                    $(this).addClass($(this).data('animation'));
+                });
+
+                homeMask.on('touchstart', 'img[data-animation]', function (e) {
+                    var changes = e.originalEvent.changedTouches[0];
+                    originPoint.x = changes.pageX;
+                    originPoint.y = changes.pageY;
+                });
+
+                homeMask.on('touchmove', 'img[data-animation]', function (e) {
+
+                    e.preventDefault();
+
+                    var direction;
+                    var changes = e.originalEvent.changedTouches[0];
+
+                    console.log(changes.pageX, originPoint.x);
+
+                    if (changes.pageX < originPoint.x - TOUCH_GAP) {
+                        // to left
+                        direction = 'left';
+                    }
+                    else if (changes.pageX > originPoint.x + TOUCH_GAP) {
+                        // to right
+                        direction = 'right';
+                    }
+
+                    if (direction) {
+                        imgs.addClass('jumpout');
+                        var gap = changes.pageY - originPoint.y;
+                        gap = gap * 10;
+
+                        if (direction == 'left') {
+                            imgs.css({
+                                left: -winWidth + 'px',
+                                top: gap + 'px'
+                            });
+                        }
+
+                        if (direction == 'right') {
+                            imgs.css({
+                                left: winWidth * 1.5 + 'px',
+                                top: gap + 'px'
+                            });
+                        }
+
+                        showFirstPage();
+                        
+                    }
                 });
             },
             start: showFirstPage
@@ -432,12 +473,14 @@ define(['jquery'], function ($) {
 
         function initVideo() {
 
-            // youku init
-            // youkuPlayer.init();
+            $('.video').each(function () {
+                var me = $(this);
+                me.width(me.width()).height(me.height());
+            });
 
             $('.video').on('click', function () {
                 var videoId = $(this).data('video-id');
-                youkuPlayer.play(videoId);
+                youkuPlayer.load(videoId, $(this));
             });
         }
 
@@ -448,7 +491,7 @@ define(['jquery'], function ($) {
 
     var youkuPlayer = (function () {
 
-        var jsapi = 'http://player.youku.com/jsapi';
+        
         var isApiReady;
 
         var frames = {};
@@ -456,38 +499,24 @@ define(['jquery'], function ($) {
         var wrapHeight = $('.page-container').height();
         var wrapWidth = $('.page-container').width();
 
-        function getFrameId(id) {
+        function getFrameId(id, container) {
+            var contId = 'videoframe-' + id;
             if (frames[id]) {
                 return frames[id].id;
             }
             else {
-                var frame = $('<div/>').addClass('video-player').attr('id', 'videoframe-' + id);
-                var close = $('<span>x</span>').addClass('video-player-close')
-                    .on('click', function () {
-                        stop(id);
-                    })
-                    .appendTo(frame);
-                var wrap = $('<div/>').addClass('video-wrap').attr('id', 'videosrc-' + id).appendTo(frame);
-                frame.appendTo($(document.body));
-
-                wrap.css({
-                    width: wrapWidth + 'px',
-                    height: wrapHeight * 0.8 + 'px',
-                    top: wrapHeight * 0.1 + 'px'
-                });
+                $(container).attr('id', contId);
 
                 frames[id] = {
-                    id: wrap[0].id,
-                    container: frame[0]
+                    id: contId,
+                    container: $(container)[0]
                 };
-
-                
 
                 return frames[id].id;
             }
         }
 
-        function loadPlayer(videoId) {
+        function loadPlayer(videoId, container) {
 
             // wait for api ready
             if (!isApiReady) {
@@ -500,47 +529,19 @@ define(['jquery'], function ($) {
             var videoPlayer = frames[videoId] && frames[videoId].player;
 
             if (!videoPlayer) {
-                videoPlayer = new YKU.Player(getFrameId(videoId),{
+                videoPlayer = new YKU.Player(getFrameId(videoId, container),{
                     styleid: '4',  // default '0'
                     client_id: YOUKU_ID,
                     vid: videoId,
-                    autoplay: false,
+                    autoplay: true,
                     events: {
-                        onPlayEnd: function () {
-                            frames[videoId].container.style.zIndex = -1;
+                        onPlayStart: function () {
+                            music.off();
                         }
                     }
                 });
 
                 frames[videoId].player = videoPlayer;
-            }
-        }
-
-        function startPlay(videoId) {
-            if (!frames[videoId]) {
-                return false;
-            }
-
-            var container = frames[videoId].container;
-            var player = $(container).find('.x-video-player')[0];
-            if (player && player.src) {
-                // android 下player.src是空的
-                player.play();
-                player.webkitRequestFullScreen();
-                music.off();
-            }
-            else if (frames[videoId].player) {
-                music.off();
-                $(container).css('zIndex', 9999);
-                frames[videoId].player.playVideo();
-            }
-            else {
-                var tips = $('<span/>').addClass('err-msg').text('用户过多，请稍后再试!').appendTo($(document.body));
-                tips.css({
-                    marginLeft: -tips.outerWidth() / 2 + 'px'
-                }).delay(3000).fadeOut(function () {
-                    $(this).remove();
-                });
             }
         }
 
@@ -556,26 +557,31 @@ define(['jquery'], function ($) {
             }
         }
 
-        var isInited;
-
         return {
-            play: startPlay,
             load: loadPlayer,
             stop: stop,
             init: function () {
-                if (isInited) {
+                if (isApiReady) {
                     return false;
                 }
-                isInited = 1;
+
+                var jsapi = YOUKU_JSAPI;
 
                 $.ajax({
                     url: jsapi,
                     dataType: 'script',
+                    timeout: 15 * 1000,
                     cache: true,
                     success: function (data) {
                         isApiReady = 1;
+                    },
+                    error: function () {
+                        youkuPlayer.init();
                     }
                 });
+            },
+            isLoaded: function () {
+                return isApiReady;
             }
         };
     })();

@@ -107,6 +107,51 @@
     }
 }
 
+// homepage animation
+.homepage {
+    position: absolute;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+
+    .home-mask {
+        position: absolute;
+        z-index: 100;
+        background: url(../img/page/home-bg.jpg) no-repeat center top;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+
+        img {
+            margin: 0 auto;
+            display: block;
+            position: absolute;
+            left: 50%;
+        }
+
+        @first-top: 208px;
+
+        img:first-child {
+            width: 582px / 2;
+            top: @first-top;
+            margin-left: -582px / 4;
+        }
+
+        img:nth-child(2) {
+            width: 140px / 2;
+            z-index: 10;
+            top: @first-top + 84px;
+            margin-left: -140px / 4;
+        }
+
+        img:last-child {
+            width: 118px;
+            top: @first-top + 84px + 32px - 5px;
+            margin-left: -118px / 2;
+        }
+    }
+}
+
 
 
 .s-homepage {
@@ -132,7 +177,6 @@
 
 // 首页美味关系介绍的样式设定
 .s-page1 {
-    // background-image: url(../img/page/bg-page2.png);
     background-color: #ffe203;
     color: #060202;
 
@@ -184,7 +228,7 @@
 // pengcheng intro page
 // start...
 .s-page2 {
-    background-image: url(../img/page/bg-page3.jpg);
+    background-image: url(../img/page/bg-page3.jpg?v=20141218);
 
     article {
         padding: 25% 0 0;
@@ -548,12 +592,11 @@
 
     .video {
         position: relative;
-        padding: 0 20px;
-        margin-top: 10%;
+        margin: 10% 20px 0;
+        border: 2px solid #000;
 
         &-food {
             width: 100%;
-            border: 2px solid #000;
         }
 
         &-play-btn {
@@ -612,10 +655,11 @@
 
 // 封底页
 .page-end {
-    background-image: url(../img/page/bg-page1.jpg);
+    background-image: url(../img/page/page-end.jpg);
 
     article {
         padding: 10px;
+        display: none;
     }
 
     .title {
