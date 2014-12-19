@@ -129,7 +129,7 @@ projects.forEach(function (project, i) {
     // uglify
     gulp.task(project + 'uglify', [project + 'js'], function() {
         return gulp.src([dir + '/' + 'asset/js/*.js'])
-            .pipe(rename({suffix: '.min'}))
+            // .pipe(rename({suffix: '.min'}))
             .pipe(uglify({
                 mangle: {
                     except: ['require', 'define', 'export']
@@ -159,9 +159,9 @@ projects.forEach(function (project, i) {
     });
 
     // cssmin 
-    gulp.task(project + 'cssmin', [project + 'less'], function () {
-        gulp.src([dir + '/' + 'asset/css/*.css'])
-            .pipe(rename({suffix: '.min'}))
+    gulp.task(project + 'cssmin', function () {
+        gulp.src(dir + '/' + 'asset/css/*.css')
+            // .pipe(rename({suffix: '.min'}))
             .pipe(minifycss())
             .pipe(header(banner, { project: project, nowStr: nowStr } ))
             .pipe(gulp.dest(dir + '/' + 'asset/css'));

@@ -5,8 +5,6 @@
 <title>美味关系Bon appétit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 <meta name="description" content="美味关系是一档具有互动性的西式美食文化类节目，在我们的大厨彭程老师手中赋予每一件炊具一首旋律，演绎出一段美味的关系">
 <link rel="stylesheet" type="text/css" href="../dep/swiper/dist/idangerous.swiper.css">
@@ -358,11 +356,10 @@ require.config({
         'jquery-eraser': '../../../dep/jquery-eraser/jquery.eraser.amd.min',
         'swiper': '../../../dep/swiper/dist/idangerous.swiper.min',
         'swiper-smooth-progress': '../../../dep/swiper/plugin/idangerous.swiper.progress.amd.min'
-    },
-    urlArgs: 'v=20141121'
+    }
 });
 
-require(['main.min', 'weixin.min'], function (main, wx) {
+require(['main', 'weixin'], function (main, wx) {
     var path = window.location.href;
     var baseUrl = path.substr(0, path.lastIndexOf('/') + 1);
 
@@ -379,8 +376,9 @@ require(['main.min', 'weixin.min'], function (main, wx) {
     main.init({
         loop: 0,
         progress: true,
-        // keyboardControl: true,
+        keyboardControl: true,
         longSwipesRatio: 0.3,
+        touchRatio: 1.2,
         initialSlide: 0
     }, youkuId);
 });

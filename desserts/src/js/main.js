@@ -214,7 +214,7 @@ define(['jquery'], function ($) {
 
             initTab();
 
-            initFoodsHeight();
+            initFoods();
 
             // 动画的初始化
             animation.init();
@@ -223,19 +223,44 @@ define(['jquery'], function ($) {
     };
 
     // 更新食材页列表高度
-    function initFoodsHeight() {
+    function initFoods() {
         $('.s-page-foods').each(function () {
             var pageh = $(this).find('article').height();
             var winh = $(window).height();
             if (pageh > winh) {
                 var picWrap = $(this).find('.pic-album');
-                var mh = picWrap.outerHeight();
-                var scale = (winh - $(this).find('.title').outerHeight())/ picWrap.outerHeight();
+                var mh = picWrap.height();
+                var scale = (winh - $(this).find('.title').outerHeight())/ mh;
 
                 var offsetY = mh * (scale - 1) * scale;
                 picWrap.css('transform', 'scale(' + scale + ', ' + scale + ') translateY(' + offsetY + 'px)');
             }
+
+            var foods = $(this);
+            var list = foods.find('.foods-list').children();
+            var ingresH = list.outerHeight() * list.size() - 15;
+            var oriY = 0;
+
+            foods.find('.foods-list').on('scroll', function (e) {
+                var me = $(this);
+                var scrollTop = me.scrollTop();
+
+                if (scrollTop > oriY) {
+                    // scroll down
+                    if (scrollTop >= ingresH) {
+                        me.removeClass('swipe-stop');
+                    }
+                }
+                else {
+                    if (scrollTop == 0) {
+                        me.removeClass('swipe-stop');
+                    }
+                }
+
+                oriY = scrollTop;
+            });
         });
+
     }
 
     var animation = (function () {
@@ -353,6 +378,8 @@ define(['jquery'], function ($) {
         slide.find('.video').each(function () {
             youkuPlayer.load($(this).data('video-id'));
         });
+
+        slide.find('.foods-list').addClass('swipe-stop');
 
         // init animations
         animation.start(swiper.activeIndex);
