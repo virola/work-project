@@ -1,5 +1,5 @@
 /**
  * desserts
- * @version 2014-12-19 22:33:2
+ * @version 2014-12-22 16:15:1
  */
 define(function(){function i(){WeixinJSBridge.invoke("sendAppMessage",{appid:"",img_url:d.icon,img_width:d.width,img_height:d.height,link:d.link,desc:d.content,title:d.title},o)}function e(){WeixinJSBridge.invoke("shareWeibo",{url:d.link,content:d.content},o)}function n(){WeixinJSBridge.invoke("shareTimeline",{img_url:d.icon,img_width:d.width,img_height:d.height,link:d.link,desc:d.content,title:d.title},o)}function t(){WeixinJSBridge.on("menu:share:appmessage",function(){i()}),WeixinJSBridge.on("menu:share:timeline",function(){n()}),WeixinJSBridge.on("menu:share:weibo",function(){e()}),WeixinJSBridge.invoke("getNetworkType",{},function(i){c=i.err_msg})}function o(){}var d,c,r={};return r.getNetworkType=function(){return c},r.init=function(i){i=i||{},d={icon:i.icon,width:i.width||120,height:i.height||120,title:i.title||document.title,link:i.link||window.location.href,content:i.content||""},"undefined"==typeof WeixinJSBridge?document.addEventListener?document.addEventListener("WeixinJSBridgeReady",t,!1):document.attachEvent&&(document.attachEvent("WeixinJSBridgeReady",t),document.attachEvent("onWeixinJSBridgeReady",t)):t()},r});

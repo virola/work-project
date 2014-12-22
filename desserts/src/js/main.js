@@ -22,47 +22,10 @@ define(['jquery'], function ($) {
 
     // swiper effects
     var EFFECTS = {
-        scaleIn: {
-            effects: {
-                onProgressChange: function (swiper) {
-
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        var slide = swiper.slides[i];
-                        var progress = slide.progress;
-                        var scale;
-                        var translate
-                        var opacity;
-
-                        if (progress <= 0) {
-                            opacity = 1 - Math.min(Math.abs(progress), 1);
-                            scale = 1 - Math.min(Math.abs(progress / 2), 1);
-                            translate = progress * swiper.width;  
-                        }
-                        else {
-                            opacity = 1 - Math.min(Math.abs(progress / 2), 1);
-                            scale = 1;
-                            translate = 0; 
-                        }
-                        slide.style.opacity = opacity;
-                        swiper.setTransform(slide, 'translate3d(0,' + (translate) + 'px,0) scale(' + scale + ')');
-                    }
-                },
-                onTouchStart: function (swiper) {
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        swiper.setTransition(swiper.slides[i], 0);
-                    }
-                },
-                onSetWrapperTransition: function(swiper, speed) {
-                    for (var i = 0; i < swiper.slides.length; i++) {
-                        swiper.setTransition(swiper.slides[i], speed);
-                    }
-                }
-            }
-        },
         scaleOut: {
             effects: {
                 onProgressChange: function (swiper) {
-                    var currentIndex = swiper.activeIndex;
+                    var active = swiper.activeIndex;
                     for (var i = 0; i < swiper.slides.length; i++) {
                         var slide = swiper.slides[i];
                         var progress = slide.progress;
@@ -70,13 +33,13 @@ define(['jquery'], function ($) {
                         var translate
                         var opacity;
 
-                        if (progress >= 0) {
+                        if (progress > 0) {
                             opacity = 1 - Math.min(Math.abs(progress), 1);
                             scale = 1 - Math.min(Math.abs(progress / 2), 1);
                             translate = progress * swiper.width;  
                         }
                         else {
-                            opacity = 1 - Math.min(Math.abs(progress / 2), 1);
+                            opacity = 1;
                             scale = 1;
                             translate = 0; 
                         }
@@ -188,7 +151,7 @@ define(['jquery'], function ($) {
         else {
             setTimeout(function () {
                 start();
-            }, 500);
+            }, 200);
         }
     }
 
@@ -205,7 +168,7 @@ define(['jquery'], function ($) {
             cacheOptions.noSwipingClass = 'swipe-stop';
             uiSlider = new Swiper('.page-container', cacheOptions);
 
-            // uiSlider.addCallback('SlideChangeStart', handlerSlideChangeStart);
+            uiSlider.addCallback('SlideChangeStart', handlerSlideChangeStart);
             uiSlider.addCallback('SlideChangeEnd', handlerSlideChangeEnd);
 
             initTab();
@@ -269,13 +232,13 @@ define(['jquery'], function ($) {
                 return;
             }
             pages.eq(index).children().each(function (index) {
-                $(this).delay(400 * index).fadeIn(800);
+                $(this).delay(200 * index).fadeIn(400);
             });
         }
 
         function slideShow(index) {
             pages.eq(index).children().each(function (index) {
-                $(this).delay(400 * index).slideDown(800);
+                $(this).delay(200 * index).slideDown(400);
             });
         }
 
@@ -288,40 +251,38 @@ define(['jquery'], function ($) {
     })();
 
     /**
-     * music object
+     * pageMusic object
      * 
      * @type {Object}
      */
-    var music = (function () {
+    var pageMusic = (function () {
 
-        var btn = $('.player-btn');
-        var audio = $('.bg-music');
+        var playBtn = $('.player-btn');
+        var bgMusic = $('.bg-music');
 
         // init music control
         function initMusic() {
-            
-            btn.on('click', function () {
-                if (btn.hasClass('player-btn-stop')) {
-                    music.on();
+
+            playBtn.on('click', function () {
+                if (playBtn.hasClass('player-btn-stop')) {
+                    pageMusic.on();
                 }
                 else {
-                    music.off();
+                    pageMusic.off();
                 }
             });
 
-            audio.attr('autoplay', true);
-            music.on();
         }
 
         return {
             init: initMusic,
             off: function () {
-                btn.addClass('player-btn-stop');
-                audio[0].pause();
+                playBtn.addClass('player-btn-stop');
+                bgMusic[0].pause();
             },
             on: function () {
-                btn.removeClass('player-btn-stop');
-                audio[0].play();
+                playBtn.removeClass('player-btn-stop');
+                bgMusic[0].play();
             }
         };
     })();
@@ -362,8 +323,7 @@ define(['jquery'], function ($) {
     }
 
     function handlerSlideChangeStart(swiper) {
-        // var slide = $(swiper.activeSlide());
-        // console.log(slide);
+        // $('.video').hide();
     }
 
     function handlerSlideChangeEnd(swiper) {
@@ -374,6 +334,7 @@ define(['jquery'], function ($) {
         slide.find('.foods-list').addClass('swipe-stop');
 
         // init animations
+        animation.init();
         animation.start(swiper.activeIndex);
     }
 
@@ -386,28 +347,34 @@ define(['jquery'], function ($) {
     var firstPage = (function () {
 
         var RATIO = 0.3;
+        var homeMask = $('.home-mask');
+        var originPoint = {};
+        var TOUCH_GAP = 5;
 
-        // var homeImgSelector = '.home-mask';
+        var isFaded;
 
         function showFirstPage() {
-            $('.homepage').fadeOut(1500);
+
+            if (isFaded) {
+                return false;
+            }
+
+            isFaded = 1;
+            homeMask.fadeOut(1500, function () {
+                homeMask.remove();
+            });
 
             // play music
-            music.init();
+            pageMusic.init();
         }
 
-        var homeMask = $('.home-mask');
-
-        var originPoint = {};
-
-        var TOUCH_GAP = 10;
 
         return {
             init: function () {
 
                 var winWidth = $(window).width();
 
-                var imgs = homeMask.find('img');
+                homeMask.width(winWidth).height($(window).height());
 
                 homeMask.find('img[data-animation]').each(function () {
                     $(this).addClass($(this).data('animation'));
@@ -419,14 +386,14 @@ define(['jquery'], function ($) {
                     originPoint.y = changes.pageY;
                 });
 
+                var imgs = homeMask.find('img');
+
                 homeMask.on('touchmove', 'img[data-animation]', function (e) {
 
                     e.preventDefault();
 
                     var direction;
                     var changes = e.originalEvent.changedTouches[0];
-
-                    console.log(changes.pageX, originPoint.x);
 
                     if (changes.pageX < originPoint.x - TOUCH_GAP) {
                         // to left
@@ -438,27 +405,38 @@ define(['jquery'], function ($) {
                     }
 
                     if (direction) {
-                        imgs.addClass('jumpout');
+                        // imgs.addClass('jumpout');
                         var gap = changes.pageY - originPoint.y;
-                        gap = gap * 10;
+                        gap = gap * 5;
 
                         if (direction == 'left') {
-                            imgs.css({
+                            imgs.animate({
                                 left: -winWidth + 'px',
                                 top: gap + 'px'
-                            });
+                            }, 1500);
                         }
 
                         if (direction == 'right') {
-                            imgs.css({
+                            imgs.animate({
                                 left: winWidth * 1.5 + 'px',
                                 top: gap + 'px'
-                            });
+                            }, 1500);
                         }
 
-                        showFirstPage();
+                        setTimeout(function () {
+                            showFirstPage();
+                        }, 500);
                         
                     }
+                });
+
+
+                homeMask.on('touchmove', function () {
+                    return false;
+                });
+
+                $(document).one('touchstart', function () {
+                    pageMusic.on();
                 });
             },
             start: showFirstPage
@@ -536,7 +514,7 @@ define(['jquery'], function ($) {
                     autoplay: true,
                     events: {
                         onPlayStart: function () {
-                            music.off();
+                            pageMusic.off();
                         }
                     }
                 });

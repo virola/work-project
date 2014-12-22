@@ -5,76 +5,7 @@
 @color-shuiguota: #ffd4ad;
 @color-naidong: #faf0d1;
 @color-paofu: #ffa11b;
-
 @color-all: #b78a53;
-
-// mixins
-
-// flex box
-
-.flex-box() {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;        /* OLD - Firefox 19- (doesn't work very well) */
-    display: -ms-flexbox;      /* TWEENER - IE 10+ */
-
-    display: -webkit-flex;      /* NEW - Chrome */
-    display: flex;                  /* NEW, Spec - Opera 12.1, Firefox 20+ */
-}
-
-.flex-h() {
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;      /* vertical */
-
-    -webkit-flex-direction: row;        /* column, row-reverse, column-reverse */
-    -ms-flex-direction: row;
-    flex-direction: row;
-}
-
-.flex-v() {
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-// 内部元素对齐方式
-// center, center
-// 
-.flex-align(@direction) {
-    -webkit-align-items: @direction;
-    align-items: @direction;
-
-    -webkit-justify-content: @direction;
-    justify-content: @direction;
-}
-.flex-align(@direction, @valign) {
-    -webkit-align-items: @valign;
-    align-items: @valign;
-
-    -webkit-justify-content: @direction;
-    justify-content: @direction;
-}
-
-// align-content
-// : flex-start | flex-end | center | space-between | space-around | stretch
-.flex-align-v(@direction) {
-    -webkit-align-content: @direction;
-    align-content: @direction;
-}
-
-.flex-item(@size) {
-    -webkit-box-flex: @size;
-    -moz-box-flex: @size;
-    -webkit-flex: @size;
-    -ms-flex: @size;
-    flex: @size;
-}
-
-// page less start....
 
 .page-container {
     background: #000;
@@ -98,7 +29,7 @@
     transform-style: preserve-3d;
 
     background-size: cover;
-    background-position: 50% 50%;
+    background-position: center top;
     background-repeat: no-repeat;
 
     img {
@@ -108,47 +39,41 @@
 }
 
 // homepage animation
-.homepage {
-    position: absolute;
-    z-index: 99;
+.home-mask {
+    position: fixed;
+    z-index: 9999;
+    background: #ffe203 url(../img/page/home-bg.jpg) no-repeat;
+    background-position: center top;
+    background-size: cover;
     width: 100%;
     height: 100%;
 
-    .home-mask {
+    img {
+        margin: 0 auto;
+        display: block;
         position: absolute;
-        z-index: 100;
-        background: url(../img/page/home-bg.jpg) no-repeat center top;
-        background-size: cover;
-        width: 100%;
-        height: 100%;
+        left: 50%;
+    }
 
-        img {
-            margin: 0 auto;
-            display: block;
-            position: absolute;
-            left: 50%;
-        }
+    @first-top: 208px;
 
-        @first-top: 208px;
+    img:first-child {
+        width: 582px / 2;
+        top: @first-top;
+        margin-left: -582px / 4;
+    }
 
-        img:first-child {
-            width: 582px / 2;
-            top: @first-top;
-            margin-left: -582px / 4;
-        }
+    img:nth-child(2) {
+        width: 140px / 2;
+        z-index: 10;
+        top: @first-top + 84px;
+        margin-left: -140px / 4;
+    }
 
-        img:nth-child(2) {
-            width: 140px / 2;
-            z-index: 10;
-            top: @first-top + 84px;
-            margin-left: -140px / 4;
-        }
-
-        img:last-child {
-            width: 118px;
-            top: @first-top + 84px + 32px - 5px;
-            margin-left: -118px / 2;
-        }
+    img:last-child {
+        width: 118px;
+        top: @first-top + 84px + 32px - 5px;
+        margin-left: -118px / 2;
     }
 }
 
@@ -184,16 +109,14 @@
     article {
         width: 19em;
         margin: 0 auto;
-        height: 100%;
-
-        .flex-box();
-        .flex-v();
-        .flex-align(center);
-        .flex-align-v(center);
+        padding-top: 4em;
     }
 
     .logo {
-        margin-bottom: 1.5em;
+
+        img {
+            margin: 0 auto;
+        }
     }
 
     p {
@@ -204,6 +127,7 @@
 
     .slogan-text {
         opacity: .4;
+        margin: 1em auto;
     }
 }
 
@@ -228,7 +152,7 @@
 // pengcheng intro page
 // start...
 .s-page2 {
-    background-image: url(../img/page/bg-page3.jpg?v=20141218);
+    background-image: url(../img/page/bg-page3.jpg?v=20141222);
 
     article {
         padding: 25% 0 0;
@@ -260,7 +184,7 @@
 }
 
 .s-page3 {
-    // background-image: url(../img/page/bg-person.jpg);
+    // background-image: url(../img/page/bg-person.jpg?v=20141222);
     background-color: #ffee6d;
 
     header {
@@ -450,6 +374,7 @@
 
             p {
                 width: 100%;
+                font-size: 12px;
                 .ellipsis(3);
             }
         }
@@ -508,7 +433,7 @@
 
 // 食材页
 .s-page-foods {
-    // background-image: url(../img/page/bg-foods.jpg);
+    // background-image: url(../img/page/bg-foods.jpg?v=20141222);
     background-color: #ffe203;
 
     .pic-album {
@@ -541,7 +466,7 @@
     .foods-list {
         height: 100%;
         padding-bottom: 2em;
-        overflow: auto;
+        overflow: scroll;
 
         dl {
             .clearfix();
@@ -594,6 +519,10 @@
         position: relative;
         margin: 10% 20px 0;
         border: 2px solid #000;
+
+        .youku-player {
+            
+        }
 
         &-food {
             width: 100%;
@@ -655,7 +584,8 @@
 
 // 封底页
 .page-end {
-    background-image: url(../img/page/page-end.jpg);
+    background-image: url(../img/page/page-end.jpg?v=20141222);
+    background-position: center top;
 
     article {
         padding: 10px;
