@@ -65,17 +65,6 @@ var paths = {
 
 
 var toolOptions = {
-    uglify: {
-        options: {
-            banner: '/* <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-        }
-    },
-    cssmin: {
-        options: {
-            banner: '/** <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> **/',
-            compatibility: 'ie7'
-        }
-    },
     jshint: {
         options: {
             jshintrc: 'src/.jshintrc'
@@ -162,7 +151,10 @@ projects.forEach(function (project, i) {
     gulp.task(project + 'cssmin', function () {
         gulp.src(dir + '/' + 'asset/css/*.css')
             // .pipe(rename({suffix: '.min'}))
-            .pipe(minifycss())
+            .pipe(minifycss({
+                compatibility: 'ie7',
+                noAdvanced: true
+            }))
             .pipe(header(banner, { project: project, nowStr: nowStr } ))
             .pipe(gulp.dest(dir + '/' + 'asset/css'));
     });
