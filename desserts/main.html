@@ -160,7 +160,7 @@
             <div class="circle-glow"></div>
             <article>
                 <h2 class="title"><img src="asset/img/page/banner/paofu.png?v=20141222"></h2>
-                <figure class="video" data-video-id="XODUzMjU5NDky">
+                <figure class="video" data-video-id="XODUzMjU5NDky" data-video-src="http://pl.youku.com/playlist/m3u8?vid=213314873&type=mp4&ts=1419318504&keyframe=0&ep=dCaVE0qMXssA4STXiT8bZy7nfSUMXPwL9RyEhdplA9QlSOi2&sid=6419318504781120259b3&token=1009&ctype=12&ev=1&oip=3740314466">
                     <img class="video-food" src="asset/img/desserts/paofu.jpg?v=20141222" alt="修女泡芙">
                     <img class="video-play-btn" src="asset/img/video-play-btn.png?v=20141222">
                 </figure>
@@ -376,16 +376,13 @@ require(['main', 'weixin'], function (main, wx) {
         content: '330秒的时间，感受真正的法式浪漫'
     });
 
-    var youkuId = '--';
-    var youkuApi = 'http://player.youku.com/jsapi';
-
     main.init({
         loop: 0,
         progress: true,
         longSwipesRatio: 0.3,
         touchRatio: 1.2,
         initialSlide: 0
-    }, youkuId, youkuApi);
+    });
 });
 
 </script>

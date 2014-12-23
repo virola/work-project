@@ -69,10 +69,7 @@ define(['jquery'], function ($) {
      */
     var cacheOptions;
 
-    var YOUKU_ID;
-    var YOUKU_JSAPI;
-
-    exports.init = function (options, youkuId, youkuApi) {
+    exports.init = function (options) {
 
         var effect = options.effect || 'scaleOut';
         cacheOptions = $.extend({
@@ -83,13 +80,9 @@ define(['jquery'], function ($) {
             preventLinks: false
         }, options, EFFECTS[effect].effects);
 
-        YOUKU_ID = youkuId || '';
-        YOUKU_JSAPI = youkuApi || '';
-
         cacheOptions.updateOnImagesReady = 1;
         cacheOptions.onImagesReady = function (swiper) {
             start();
-            youkuPlayer.init();
         };
 
         // 判断背景图片的加载
@@ -134,7 +127,7 @@ define(['jquery'], function ($) {
         var nowTime = new Date();
         var gap = nowTime - startTime;
 
-        if (allcount <= loaded && gap > 2 * 1000 && youkuPlayer.isLoaded()) {
+        if (allcount <= loaded && gap > 2 * 1000) {
             
             globalDom.removeClass('hide');
             $('.loading').fadeOut(function () {
@@ -453,12 +446,11 @@ define(['jquery'], function ($) {
 
             $('.video').each(function () {
                 var me = $(this);
-                me.width(me.width()).height(me.height());
+                me.width(me.outerWidth()).height(me.height());
             });
 
-            $('.video').on('click', function () {
-                var videoId = $(this).data('video-id');
-                youkuPlayer.load(videoId, $(this));
+            $('.video').on('touchstart', function () {
+                youkuPlayer.load($(this));
             });
         }
 
@@ -467,100 +459,63 @@ define(['jquery'], function ($) {
         };
     })();
 
+    /**
+     * 优酷播放器对象
+     * 
+     * @type {Object}
+     */
     var youkuPlayer = (function () {
+        var isWebkit = /webkit/i.test(navigator.userAgent);
+        var isFirefox = /firefox\/(\d+\.\d+)/i.test(navigator.userAgent) ? + RegExp['\x241'] : undefined;
 
-        
-        var isApiReady;
+        function startPlay(container) {
+            container = $(container);
+            pageMusic.off();
 
-        var frames = {};
+            if (container.data('video-loaded')) {
+                var video = container.find('video').get(0);
 
-        var wrapHeight = $('.page-container').height();
-        var wrapWidth = $('.page-container').width();
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                }
+                else {
+                    if (isFirefox) {
+                        // Mozilla
+                        video.mozRequestFullScreen();   
+                    }
+                    
+                    if (isWebkit) {
+                        // Webkit for video elements only
+                        video.webkitRequestFullscreen();
+                    }
+                }
 
-        function getFrameId(id, container) {
-            var contId = 'videoframe-' + id;
-            if (frames[id]) {
-                return frames[id].id;
+                video.play();
             }
             else {
-                $(container).attr('id', contId);
-
-                frames[id] = {
-                    id: contId,
-                    container: $(container)[0]
-                };
-
-                return frames[id].id;
-            }
-        }
-
-        function loadPlayer(videoId, container) {
-
-            // wait for api ready
-            if (!isApiReady) {
-                setTimeout(function () {
-                    loadPlayer(videoId);
-                }, 500);
-                return false;
-            }
-
-            var videoPlayer = frames[videoId] && frames[videoId].player;
-
-            if (!videoPlayer) {
-                videoPlayer = new YKU.Player(getFrameId(videoId, container),{
-                    styleid: '4',  // default '0'
-                    client_id: YOUKU_ID,
-                    vid: videoId,
-                    autoplay: true,
-                    events: {
-                        onPlayStart: function () {
-                            pageMusic.off();
-                        }
-                    }
+                var vsrc = container.data('video-src');
+                var poster = container.find('img:first').attr('src');
+                var jVideo = $('<video></video>').attr({
+                    'controls': true,
+                    'autoplay': true,
+                    'src': vsrc,
+                    'poster': poster,
+                    'height': '100%'
                 });
+                jVideo.on('play', function () {
+                    this.requestFullscreen();
+                    this.webkitRequestFullscreen();
+                });
+                container.children().hide();
+                container.append(jVideo);
 
-                frames[videoId].player = videoPlayer;
-            }
-        }
-
-        function stop(videoId) {
-            if (!frames[videoId]) {
-                return false;
+                container.data('video-loaded', jVideo)
             }
             
-            var container = frames[videoId].container;
-            if (frames[videoId] && frames[videoId].player) {
-                $(container).css('zIndex', -1);
-                frames[videoId].player.pauseVideo();
-            }
         }
 
         return {
-            load: loadPlayer,
-            stop: stop,
-            init: function () {
-                if (isApiReady) {
-                    return false;
-                }
-
-                var jsapi = YOUKU_JSAPI;
-
-                $.ajax({
-                    url: jsapi,
-                    dataType: 'script',
-                    timeout: 15 * 1000,
-                    cache: true,
-                    success: function (data) {
-                        isApiReady = 1;
-                    },
-                    error: function () {
-                        youkuPlayer.init();
-                    }
-                });
-            },
-            isLoaded: function () {
-                return isApiReady;
-            }
+            load: startPlay
         };
     })();
 
