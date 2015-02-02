@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file</title>
+</head>
+<body>
+
+<input type="file" name="file" id="file">
+<input name="name" value="中文名字">
+
+<br>
+<button id="cut">裁剪</button>
+<canvas id="canvas"></canvas>
+
+<script src="zepto.min.js"></script>
+
+<script>
+
+$(function () {
+    var MAX_WIDTH = 320;
+    var RADIO = 4 / 3;
+
+    $('#file').on('change', function () {
+        var file = this.files[0];
+
+        var image = new Image();
+
+        image.onload = function () {
+            $this = $(this);
+            var imgwidth = this.width ? this.width : $this.width();
+            var imgheight = this.height ? this.height : $this.height();
+
+            var transform = '-0.1205,-0.1101,0.6,20';
+            cut(image, imgwidth, imgheight, transform);
+        };
+
+        var reader = new FileReader();
+        reader.index = 0;
+        reader.onloadend = function(e) {
+            image.src = e.target.result;
+            return;
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    function cut(img, imgwidth, imgheight, transform) {
+        var canvaswidth = imgwidth;
+        var canvasheight = Math.min(imgwidth / RADIO, imgheight);
+        var imgradio = Math.max(imgwidth / imgheight, RADIO);
+        
+        if (imgwidth > MAX_WIDTH) {
+            canvaswidth = MAX_WIDTH;
+            canvasheight = MAX_WIDTH / imgradio;
+        }
+
+        var canvas = $('#canvas').get(0);
+        var ctx = canvas.getContext('2d');
+
+        canvas.width = canvaswidth;
+        canvas.height = canvasheight;
+
+        if (transform) {
+            var options = transform.split(',');
+            var x = options[0] * imgwidth;
+            var y = options[1] * imgheight;
+            var scale = options[2];
+            var ratio = options[3];
+
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
+            ctx.rotate(Math.PI * ratio / 180);
+        }
+
+        ctx.drawImage(img, 0, 0, imgwidth, imgheight);
+        
+        ctx.save();
+
+        var data = canvas.toDataURL();
+        console.log(data);
+        return data;
+    }
+});
+</script>
+</body>
+</html>
