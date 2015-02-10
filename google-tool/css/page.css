@@ -1,0 +1,49 @@
+.reveal .kbd {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: rgb(247, 247, 247);
+    border: 1px solid rgb(204, 204, 204);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    color: rgb(51, 51, 51);
+    /*font-size: 11px;*/
+    line-height: 1.2;
+    text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: inline-block;
+    padding: 0.1em 0.3em;
+    margin: 0px 0.1em;
+    white-space: nowrap;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset;
+    border-radius: 3px;
+}
+
+.tl {
+    text-align: left;
+}
+
+.menu .fade-out {
+    color: #aaa;
+}
+
+.format ul li {
+    margin-bottom: .3em;
+}
+.reveal section .img-large {
+    max-height: 600px;
+}
+
+.reveal section ul li pre {
+    width: 100%;
+}
+
+.input {
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 4px;
+    width: 300px;
+}

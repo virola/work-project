@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>Google开发者工具</title>
+
+        <meta name="description" content="">
+        <meta name="author" content="Virola">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css">
+        <link rel="stylesheet" href="css/page.css">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Google开发者工具</h1>
+                    <h3>Google Developer Tool</h3>
+                    <p>
+                        <small>By <a target="_blank" href="http://github.com/virola">virola</a></small>
+                    </p>
+                </section>
+                <section>
+                    <h2>如何启用</h2>
+                    <ul>
+                        <li>右键 —> 审查元素</li>
+                        <li><code>ctrl</code> + <code>shift</code> + <code>I</code></li>
+                        <li><code>F12</code></li>
+                        <li>菜单键 —> 更多工具 —> 开发者工具</li>
+                    </ul>
+                </section>
+                <section>
+                        <h2>功能列表</h2>
+                        <ul class="menu">
+                            <li class="">元素(Elements)</li>
+                            <li class="">网络(Network)</li>
+                            <li class="">源码(Sources)</li>
+                            <li class="fragment fade-out">时间轴(Timeline)</li>
+                            <li class="fragment fade-out">性能(Profiles)</li>
+                            <li class="">资源(Resources)</li>
+                            <li class="fragment fade-out">审查(Audits)</li>
+                            <li class="">显示/命令行(Console)</li>
+                            <li class="">设备模拟(Emulation)</li>
+                        </ul>
+                    
+                </section>
+                
+                <!-- elements -->
+                <section>
+                    <section>
+                        <h2>Elements</h2>
+                        <h4>DOM操作和样式修改</h4>
+                    </section>
+                    <section>
+                        <h2>Elements</h2>
+                        <ul>
+                            <li>Tab定位值</li>
+                            <li>盒模型计算</li>
+                            <li>颜色拾色器</li>
+                            <li>禁用CSS属性,新建CSS规则</li>
+                            <li>JS/CSS历史版本 (History面板)</li>
+                        </ul>
+                        <p>
+                            <input class="input">
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Elements</h2>
+                        <ul>
+                            <li>常用DOM操作<br>(右键, Enter, Tab, 上下左右)</li>
+                            <li>设置DOM状态<br>(:active/:hover/:focus/:visited)</li>
+                            <li>修改tagName, 属性, 值</li>
+                            <li>修改HTML</li>
+                            <li>查看事件绑定</li>
+                            <li>设置断点监听DOM修改</li>
+                        </ul>
+                    </section>
+                    <section class="format">
+                        <h2>Elements</h2>
+                        <p class="tl">当CSS属性值是数字类型时，可用快捷键增加/减少数值：</p>
+                        <ul>
+                            <li>
+                                <span class="kbd">Up</span> 或者 <span class="kbd">Down</span> 增加/减少 <strong>1</strong>
+                            </li>
+                            <li>
+                                <span class="kbd">Alt</span> + <span class="kbd">Up/Down</span> 增加/减少 <strong>0.1</strong>
+                            </li>
+                            <li>
+                                <span class="kbd">Shift</span> + <span class="kbd">Up/Down</span> 或者 <span class="kbd">PageUp</span> / <span class="kbd">PageDown</span> 增加/减少 <strong>10</strong>
+                            </li>
+                            <li>
+                                <span class="kbd">Shift</span> + <span class="kbd">PageUp</span> / <span class="kbd">PageDown</span> 增加/减少 <strong>100</strong>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+                <!-- network -->
+                <section>
+                    <section>
+                        <h2>Network</h2>
+                        <h4>监控网络请求</h4>
+                    </section>
+                    <section>
+                        <h2>Network</h2>
+                        <ul>
+                            <li>跟踪重定向</li>
+                            <li>查看HTTP请求</li>
+                            <li>查看文档加载时间</li>
+                            <li>各元素的加载时间轴</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Network</h2>
+                        <p>Overview</p>
+                        <p><img src="img/network-overview.png" alt="network overview"></p>
+                    </section>
+                    <section>
+                        <h2>Network</h2>
+                        <div>
+                            <img src="img/network_2.png" alt="network">
+                        </div>
+
+                        <ol>
+                            <li class="fragment">停止监听请求</li>
+                            <li class="fragment">清空所有记录</li>
+                            <li class="fragment">筛选请求
+                                <ul>
+                                    <li class="fragment">文件名关键词查找</li>
+                                    <li class="fragment">文件类型筛选</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">显示详细列表</li>
+                            <li class="fragment">是否保留请求日志（刷新页面不清空）</li>
+                            <li class="fragment">是否禁用缓存（禁用浏览器缓存）</li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h2>Network</h2>
+                        <div class="abs">
+                            <img src="img/network.png" alt="network">
+                        </div>
+
+                        <ul>
+                            <li class="fragment">请求数 (13 requests)</li>
+                            <li class="fragment">总传输大小 (382 KB)</li>
+                            <li class="fragment">加载时间 (228 ms)
+                                <ul>
+                                    <li class="fragment">总加载时间: load</li>
+                                    <li class="fragment">DOM加载时间: DOMContentLoaded</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Network - 网络请求列表</h2>
+                        <ul>
+                            <li>文件名（文件路径）</li>
+                            <li>请求方法（GET/POST）</li>
+                            <li>请求状态
+                                <ul>
+                                    <li>200: 成功</li>
+                                    <li>304: 缓存</li>
+                                    <li>500: 服务器错误</li>
+                                </ul>
+                            </li>
+                            <li>文件类型</li>
+                            <li>发起请求的对象</li>
+                            <li>请求大小（文件内容大小）</li>
+                            <li>请求时长（等待时长）</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!-- source -->
+                <section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>源码调试-最主要的工具</h4>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <p>三栏布局</p>
+                        <ul>
+                            <li>导航栏</li>
+                            <li>代码编辑区</li>
+                            <li>代码调试区</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <p>支持工作区(workspace)</p>
+                        <ul>
+                            <li>拖拽加入文件夹</li>
+                            <li>编辑可直接保存到本地</li>
+                            <li><em>文件映射</em>直接同步本地编辑</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!-- source mapping -->
+                <section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>建立本地文件映射</h4>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>映射方法</h4>
+                        <h5>Step: 1 添加文件夹</h5>
+                        <ul>
+                            <li>方法一：拖拽文件夹到 "Sources" 面板</li>
+                            <li>方法二：右键点击导航栏, "Add Folder to Workspace"</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>映射方法</h4>
+                        <h5>Step: 2 稍等片刻</h5>
+                        <p>
+                            <img src="img/source_map.png" alt="source map">
+                        </p>
+                        <p>点击 "Establish the mapping now..."</p>
+                    </section>
+
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>映射方法</h4>
+                        <p>
+                            <h5>Step: 3</h5>
+                            <img src="img/source_map_2.png" alt="source map">
+                        </p>
+                        <p>选择要映射的对应文件</p>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>映射方法</h4>
+                        <p>
+                            <h5>Step: 4</h5>
+                            <img src="img/source_map_3.png" alt="source map">
+                        </p>
+                        <p>点"确定"，完成。</p>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>取消映射</h4>
+                        <ol>
+                            <li>在导航栏中右键点击文件夹</li>
+                            <li>"Remove Folder from Workspace" <br>(从工作区移除文件夹) </li>
+                            <li>确认后，刷新网页</li>
+                        </ol>
+                    </section>
+                </section>
+                
+                <!-- source debugger -->
+                <section>
+                    <section>
+                        <h2>Sources</h2>
+                        <h4>JS源码调试</h4>
+                    </section>
+                    <section>
+                        <h2><img class="img-large" src="img/javascript-debugging-overview.jpg" alt="overview"></h2>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <ul>
+                            <li>点击行号设置断点</li>
+                            <li>调试区观察变量</li>
+                            <li>配合Console输出</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Sources</h2>
+                        <p>调试区的 <strong>过程控制</strong> 工具</p>
+                        <p><img src="img/source_debug.png" alt="source"></p>
+                        <ul>
+                            <li>暂停所有脚本执行 <code>(F8)</code></li>
+                            <li>跳过下一个函数执行 <code>(F10)</code></li>
+                            <li>进入当前函数执行 <code>(F11)</code></li>
+                            <li>跳出当前函数执行 <code>(shift + F11)</code></li>
+                            <li>是否激活断点<br>（点亮时断点运行不会暂停）</li>
+                            <li>是否在所有exception处暂停<br>（错误追踪，脚本出错时暂停JS执行）</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!-- Resources -->
+                <section>
+                    <section>
+                        <h2>Resources</h2>
+                        <h4>资源管理面板</h4>
+                    </section>
+                    <section class="format">
+                        <h2>Resources</h2>
+                        <ul>
+                            <li>网页资源 (Frames)</li>
+                            <li>Web SQL 和 Indexed DB <code>(<a target="_blank" href="http://www.cnblogs.com/dolphinX/p/3405335.html">HTML5 API</a>)</code></li>
+                            <li>本地存储 <code>(<a href="http://www.w3school.com.cn/html5/html_5_webstorage.asp" target="_blank">HTML5 API</a>)</code>
+                                <br>LocalStorage, SessionStorage </li>
+                            <li>Cookie</li>
+                            <li>本地应用缓存 <code>(<a href="http://www.w3school.com.cn/html5/html_5_app_cache.asp" target="_blank">HTML5 API</a>)</code></li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Resources</h2>
+                        <h4>框架 Frames</h4>
+                        <p><img src="img/frame-resources.png" alt="frames"></p>
+                    </section>
+                </section>
+
+                <!-- console -->
+                <section>
+                    <section>
+                        <h2>Console</h2>
+                        <h4>控制台 - 记录诊断信息</h4>
+                    </section>
+                    <section>
+                        <h2>Console API</h2>
+                        <ul>
+                            <li><code>console.log</code></li>
+                            <li><code>console.warn</code></li>
+                            <li><code>console.error</code></li>
+                            <li><a target="_blank" href="https://developer.chrome.com/devtools/docs/console-api">More...</a></li>
+                        </ul>
+                        <pre><code>
+console.log('the current time is:', Date.now());
+
+console.log('%c格式化%c日志\n %c换行文字', 'font-size:16px', 'color:red', 'background:#000;color:#fff');
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Console 其他技巧</h2>
+                        <ul>
+                            <li class="fragment">右键： Log XMLHTTPRequests <br>- 是否在console面板中显示ajax请求</li>
+                            <li class="fragment">
+                                编写多行代码: <span class="kbd">Shift</span> + <span class="kbd">Enter</span> 换行
+                            </li>
+                            <li class="fragment"><code>console.table</code> 格式化数组显示
+<pre><code>  console.table([{a:1, b:2, c:3}, {a:"foo", b:false, c:undefined}]);
+  console.table([[1,2,3], [2,3,4]]);
+</code></pre>
+                            </li>
+                            <li class="fragment">定位console中的DOM位置
+                                <p><img src="img/console_element.png" alt="console"></p>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!-- emulation -->
+                <section>
+                    <section>
+                        <h2>Emulation</h2>
+                        <h4>设备调试</h4>
+                    </section>
+                    <section>
+                        <h2>Emulation</h2>
+                        <p><img src="img/device-mode.jpg" alt="device mode"></p>
+                    </section>
+                    <section>
+                        <h2>Emulation</h2>
+                        <h4>自定义设备 - Emulation面板</h4>
+                        <p><img src="img/device-name.png" alt="device mode"></p>
+                    </section>
+                    <section class="format">
+                        <h2>Emulation</h2>
+                        <h4>移动网速调试技巧</h4>
+                        <ul>
+                            <li>选择模拟的网络状态</li>
+                            <li>配合打开Network面板</li>
+                            <li>查看整个网页以及各个元素的加载时间</li>
+                            <li>针对加载时间较长的元素进行优化
+                                <ul class="fragment">
+                                    <li>优化图片大小</li>
+                                    <li>压缩JS/CSS</li>
+                                    <li>...</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+
+                <!-- end -->
+                <section>
+                    <h2>END</h2>
+                </section>
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+        <script src="http://s1.bdstatic.com/r/www/cache/static/jquery/jquery-1.10.2.min_f2fb5194.js"></script>
+        <script src="js/page.js"></script>
+    </body>
+</html>
