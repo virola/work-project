@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# 2014-12-29
+CACHE:
+index.html
+asset/css/main.css
+asset/js/main.js
+asset/js/weixin.js
+http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-6/esl.min.js
+NETWORK:
+*
+FALLBACK

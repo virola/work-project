@@ -69,7 +69,13 @@ define(['jquery'], function ($) {
      */
     var cacheOptions;
 
+    var WIN_WIDTH = $(window).width();
+    var WIN_HEIGHT = $(window).height();
+
     exports.init = function (options) {
+
+        // adjust body size
+        $('.body').width(WIN_WIDTH).height(WIN_HEIGHT);;
 
         var effect = options.effect || 'scaleOut';
         cacheOptions = $.extend({
@@ -89,7 +95,7 @@ define(['jquery'], function ($) {
         var bgs = [];
         var bgMap = {};
         $('.slide').each(function (i) {
-            $(this).width($(window).width()).height($(window).height());
+            $(this).width(WIN_WIDTH).height(WIN_HEIGHT);
 
             var bgimg = $(this).css('background-image');
             if (bgimg == 'none' || bgMap[bgimg]) {
@@ -179,11 +185,10 @@ define(['jquery'], function ($) {
     function initFoods() {
         $('.s-page-foods').each(function () {
             var pageh = $(this).find('article').height();
-            var winh = $(window).height();
-            if (pageh > winh) {
+            if (pageh > WIN_HEIGHT) {
                 var picWrap = $(this).find('.pic-album');
                 var mh = picWrap.height();
-                var scale = (winh - $(this).find('.title').outerHeight())/ mh;
+                var scale = (WIN_HEIGHT - $(this).find('.title').outerHeight())/ mh;
 
                 var offsetY = mh * (scale - 1) * scale;
                 picWrap.css('transform', 'scale(' + scale + ', ' + scale + ') translateY(' + offsetY + 'px)');
@@ -365,9 +370,7 @@ define(['jquery'], function ($) {
         return {
             init: function () {
 
-                var winWidth = $(window).width();
-
-                homeMask.width(winWidth).height($(window).height());
+                homeMask.width(WIN_WIDTH).height(WIN_HEIGHT);
 
                 homeMask.find('img[data-animation]').each(function () {
                     $(this).addClass($(this).data('animation'));
@@ -404,14 +407,14 @@ define(['jquery'], function ($) {
 
                         if (direction == 'left') {
                             imgs.animate({
-                                left: -winWidth + 'px',
+                                left: -WIN_WIDTH + 'px',
                                 top: gap + 'px'
                             }, 1500);
                         }
 
                         if (direction == 'right') {
                             imgs.animate({
-                                left: winWidth * 1.5 + 'px',
+                                left: WIN_WIDTH * 1.5 + 'px',
                                 top: gap + 'px'
                             }, 1500);
                         }
@@ -496,15 +499,24 @@ define(['jquery'], function ($) {
                 var vsrc = container.data('video-src');
                 var poster = container.find('img:first').attr('src');
                 var jVideo = $('<video></video>').attr({
+                    'preload': true,
                     'controls': true,
                     'autoplay': true,
                     'src': vsrc,
-                    'poster': poster,
-                    'height': '100%'
+                    'poster': poster
                 });
                 jVideo.on('play', function () {
-                    this.requestFullscreen();
-                    this.webkitRequestFullscreen();
+                    if (this.requestFullscreen) {
+                        this.requestFullscreen();
+                    }
+                    else {
+                        if (isFirefox) {
+                            this.mozRequestFullScreen();   
+                        }
+                        if (isWebkit) {
+                            this.webkitRequestFullscreen();
+                        }
+                    }
                 });
                 container.children().hide();
                 container.append(jVideo);
